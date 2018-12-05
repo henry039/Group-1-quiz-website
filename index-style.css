@@ -1,0 +1,36 @@
+body {
+    background-color: rgb(228, 228, 228);
+}
+
+#top-section {
+    margin: auto;
+    width: 75%;
+    height: 700px;
+    background-color: rgb(133, 206, 133);
+    border-radius: 8px;
+}
+
+#switchButton {
+    background-color: rgb(236, 255, 127)
+}
+
+#form-section {
+    display: block;
+    text-align: center;;
+}
+
+#login_Sign-up-submit {
+    display: inline;
+}
+
+#play-submit {
+    display: inline;
+}
+
+#login-form {
+    display: block;
+}
+
+#sign-up-form {
+    display: none;
+}

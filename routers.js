@@ -8,6 +8,9 @@ module.exports = function(app) {
     app.get("/question_create", (req, res) => {
         res.render('question_create')
     })
+    app.post("/question_create", (req, res)=>{
+        console.log(req.body)
+    })
     app.get("/quiz-create", (req, res) => {
         res.render('quiz_create')
     })

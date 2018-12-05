@@ -1,5 +1,6 @@
 const express = require('express');
 const hb = require('express-handlebars');
+const router = require("./routers.js");
 
 let app = express();
 
@@ -10,10 +11,7 @@ app.set('view engine', 'handlebars');
 //static files
 app.use(express.static('./public'));
 
-app.get("/", (req, res) => {
-    res.render('index')
-})
-
+router(app);
 
 //listen to port
 app.listen(3000);

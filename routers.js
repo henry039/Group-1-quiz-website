@@ -2,6 +2,9 @@ module.exports = function(app) {
     app.get("/", (req, res) => {
         res.render('index')
     })
+    app.post("/", (req, res)=>{
+        console.log(req.body)
+    })
     app.get("/profile_page", (req, res) => {
         res.render('profile_page')
     })

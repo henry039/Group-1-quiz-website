@@ -4,11 +4,8 @@
   "description": "Quiz website for back-end development module",
   "main": "app.js",
   "dependencies": {
-<<<<<<< HEAD
     "dotenv": "^6.2.0",
-=======
     "body-parser": "^1.18.3",
->>>>>>> 6c339abea3aaef2a4ed875c91658e9c18f2489d8
     "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
     "knex": "^0.15.2",

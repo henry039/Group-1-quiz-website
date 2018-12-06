@@ -1,13 +1,14 @@
 // Update with your config settings.
+require('dotenv').config();
 
 module.exports = {
 
   development: {
     client: 'postgresql',
     connection: {
-      database: 'quizWeb',
-      user:     'postgres',
-      password: 'postgres'
+      database: process.env.DATABASE,
+      user:     process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD
     },
   },
 

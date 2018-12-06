@@ -11,13 +11,14 @@ exports.up = function(knex, Promise) {
         await trx.schema.createTable('quizzes',(table)=>{
             table.increments('id');
             table.string('topic');
+            table.text('description')
             table.integer('userId').references('users.id');
         })
 
         await trx.schema.createTable('questions',(table)=>{
             table.increments('id');
-            table.string('topic');
-            table.string('answer');
+            table.string('question');
+            table.json('answers');
             table.integer('userId').references('users.id');
             table.integer('quizId').references('quizzes.id'); 
         })

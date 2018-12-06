@@ -3,18 +3,18 @@
 </section>
 <section id="form-section">
     <div id="login_Sign-up-submit">
-        <button id="switchButton" class="btn btn-default">Click to Register</button>
+        <button id="switchButton" class="btn btn-default" name="submitButton">Click to Register</button>
         <a></a><form action="" id="login-form">
-            Login<input type="text" name="name" placeholder="email..."><input type="password" name="password" placeholder="Password"><button>submit</button> 
+            Login<input type="text" name="login-email" placeholder="email..."><input type="password" name="login-password" placeholder="Password"><input type="submit" value="Submit" name="logInSubmit">
         </form>
         <form action="" id="sign-up-form">
-            Sign-up<input type="text" name="name" placeholder="email..."><input type="password" name="password" placeholder="Password"><button>submit</button>
+            Sign-up<input type="text" name="sign-up-email" placeholder="email..."><input type="password" name="sign-up-password" placeholder="Password"><input type="submit" value="Submit" name="signUpSubmit">
         </form>
     </div>
     <div id="play-submit">
         <form action="">
-            Play<input type="number" placeholder="Pin">
-            <input type="text" name="name" placeholder="Nickname"><button>submit</button>
+            Play<input type="number" name="playPin" placeholder="Pin">
+            <input type="text" name="playHandle" placeholder="Handle"><input type="submit" value="Submit" name="playSubmit">
         </form>
     </div>
 </section>

@@ -10,3 +10,41 @@ switchButton.onclick = function() {
         document.getElementById("switchButton").innerHTML = "Click to Log-in";
     }
 };
+
+$(function(){
+    $('input[name=logInSubmit]').click(e=>{
+        e.preventDefault();
+
+        let loginEmail = $('input[name=login-email]').val();
+        let loginPassword = $('input[name=login-password]').val();
+
+        axios.post('/', {
+            loginEmail : loginEmail,
+            loginPassword : loginPassword
+        })
+    })
+
+    $('input[name=signUpSubmit]').click(e=>{
+        e.preventDefault();
+
+        let signUpEmail = $('input[name=sign-up-email]').val();
+        let signUpPassword = $('input[name=sign-up-password]').val();
+
+        axios.post('/', {
+            signUpEmail : signUpEmail,
+            signUpPassword : signUpPassword
+        })
+    })
+
+    $('input[name=playSubmit]').click(e=>{
+        e.preventDefault();
+
+        let playPin = $('input[name=playPin]').val();
+        let playHandle = $('input[name=playHandle]').val();
+
+        axios.post('/', {
+            playPin : playPin,
+            playHandle : playHandle
+        })
+    })
+})

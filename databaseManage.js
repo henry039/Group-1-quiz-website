@@ -14,61 +14,69 @@ class database{
     localSignIn(){}
     logIn(){}
     logOut(){}
-    async createQuizStructure(topic,userId,description){  //create quiz and append quiz link to quiz list
-        try {
-            await knex.transaction(async (trx) => {
-                if (topic === undefined) {
-                    return new Error("topic can't be empty");
-                }
-                if (description == undefined) {
-                    description = '';
-                }
-                let [quizid] = await trx('quizzes').insert({
-                    topic: topic,
-                    description: description,
-                    userId: userId
-                }).returning('id');
-                return {
-                    quizId: quizid,
-                    userId: userId
-                };
-            });
-        }
-        catch (err) {
+    createQuizStructure(topic,userId,description){  //create quiz and append quiz link to quiz list
+        return knex.transaction(async (trx) => {
+            if (topic === undefined) {
+                return new Error("topic can't be empty");
+            }
+            if (description == undefined) {
+                description = '';
+            }
+            let [quizid] = await trx('quizzes').insert({
+                topic: topic,
+                description: description,
+                userId: userId
+            }).returning('id');
+            return {
+                quizId: quizid,
+                userId: userId
+            };
+        })
+        .catch(err => {
             console.log(err);
-        }
+        })
     }
 
-    async getQuizDetail(quizId,userId){
-        const arr = await knex('quizzes').where('id', quizId).andWhere('userId', userId);
-        console.log(arr);
+    getQuizDetail(quizId,userId){
+        return knex('quizzes').where('id', quizId).andWhere('userId', userId)
+        .then(arr=>{
+            console.log(arr[0]);
+            return(arr[0]);
+        });
     }
 
-    async editQuizDetail(topic,description,quizId,userId){ 
-        try{
-            await knex.transaction(async trx=>{
-                if(topic === undefined){
-                    return new Error("topic can't be empty");
-                }
-                if(description == undefined){
-                    description = '';
-                }
-                await trx('quizzes').update({
-                    topic: topic,
-                    description: description
-                }).where('id',quizId).andWhere('userId',userId)
-            })
-        }
-        catch(err) {
+    editQuizDetail(topic,description,quizId,userId){ 
+        return knex.transaction(async trx=>{
+            if(topic === undefined){
+                return new Error("topic can't be empty");
+            }
+            if(description == undefined){
+                description = '';
+            }
+            await trx('quizzes').update({
+                topic: topic,
+                description: description
+            }).where('id',quizId).andWhere('userId',userId)
+        })
+        .catch(err => {
             console.log(err)
-        }
-       
-        let arr = await knex('quizzes').where('id',quizId).andWhere('userId',userId);
-        console.log(arr)
+        })
     }
 
-    async appendQuestion(question,answers,userId,quizId){
-        
+    deleteQuiz(quizId,userId){
+        return knex.transaction(async trx=>{
+                await trx('questions').where('quizId',quizId).andWhere('userId',userId).del();
+                await trx('quizzes').where('id',quizId).andWhere('userId',userId).del()
+            })
+        .catch(err =>{
+            console.log(err);
+        })
+    }
+
+    appendQuestion(question,answers,userId,quizId){
+        return knex.transaction(async trx=>{
+            
+        })
     }
     editQuestion(){}
     deleteQuestion(){}
@@ -77,7 +85,6 @@ class database{
 }
 
 let db = new database();
-
-db.editQuizDetail('no','great',1,1);
+db.deleteQuiz(3,1);
 
 // module.exports = database;

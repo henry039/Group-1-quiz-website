@@ -4,8 +4,13 @@
   "description": "Quiz website for back-end development module",
   "main": "app.js",
   "dependencies": {
+<<<<<<< HEAD
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
+=======
     "dotenv": "^6.2.0",
     "body-parser": "^1.18.3",
+>>>>>>> master
     "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
     "knex": "^0.15.2",

@@ -187,7 +187,5 @@ let players = [
     }
 ]
 
-db.deleteRecord(3,1)
 
-
-// module.exports = database;
+module.exports = database;

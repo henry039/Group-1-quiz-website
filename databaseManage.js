@@ -58,7 +58,7 @@ class database{
             trx('quizzes').update({
                 topic: topic,
                 description: description
-            }).where('id',quizId).andWhere('userId',userId)
+            }).where('id',quizId).andWhere('userId',userId);
         })
         .catch(err => {
             console.log(err)
@@ -68,7 +68,7 @@ class database{
     deleteQuiz(quizId,userId){
         return knex.transaction(async trx=>{
                 await trx('questions').where('quizId',quizId).andWhere('userId',userId).del();
-                await trx('quizzes').where('id',quizId).andWhere('userId',userId).del()
+                await trx('quizzes').where('id',quizId).andWhere('userId',userId).del();
             })
         .catch(err =>{
             console.log(err);
@@ -84,15 +84,14 @@ class database{
             }else{
                 id = 1
             }
-
-            trx('questions').insert({
+            await trx('questions').insert({
                 id: id,
                 time: time,
                 question: question,
                 answers : JSON.stringify(answers),
                 userId: userId,
                 quizId: quizId
-            })
+            });
         })
         .catch(err =>{
             console.log(err);
@@ -107,17 +106,17 @@ class database{
     }
 
     editQuestion(question,answers,questionId,quizId,userId){ //must work after quiz is created
-        return knex.transaction(trx=>{
+        return knex.transaction(async trx=>{
             if(question === undefined){
                 throw new Error('question must be setted')
             }
             if(answers.length < 2){
                 throw new Error('answer must be 2 or more')
             }
-            trx('questions').update({
+            await trx('questions').update({
                 question: question,
                 answers : JSON.stringify(answers)
-            }).where('userId',userId).andWhere('quizId',quizId).andWhere('id',questionId)
+            }).where('userId',userId).andWhere('quizId',quizId).andWhere('id',questionId);
         })
         .catch(err =>{
             console.log(err);
@@ -125,8 +124,8 @@ class database{
     }
 
     deleteQuestion(questionId,quizId,userId){
-        return knex.transaction(trx=>{
-            trx('questions').where('quizId',quizId).andWhere('userId',userId).andWhere('id',questionId).del();
+        return knex.transaction(async trx=>{
+            await trx('questions').where('quizId',quizId).andWhere('userId',userId).andWhere('id',questionId).del();
         })
         .catch(err =>{
             console.log(err);
@@ -141,7 +140,7 @@ class database{
                 dateTime: trx.fn.now(3),
                 userId: userId,
                 quizId: quizId
-            }).returning('id')
+            }).returning('id');
 
             await this.appendResults(players,recordId,userId,trx)
         })
@@ -155,16 +154,22 @@ class database{
                 answer: JSON.stringify(player.answer),
                 userId: userId,
                 recordId: recordId
-            })
+            });
         }
     }
 
     getRecord(recordId,userId){
-        return knex.transaction(trx=>{
-            
+        return knex('records').innerJoin('results','records.id','results.recordId')
+        .where('id',recordId).andWhere('records.userId',userId);
+    }
+
+    deleteRecord(recordId,userId){
+        return knex.transaction(async trx =>{
+            await trx('results').where('recordId',recordId).andWhere('userId',userId).del();
+            await trx('records').where('id',recordId).andWhere('userId',userId).del();
         })
     }
-    deleteRecord(){}
+
 }
 
 
@@ -181,6 +186,6 @@ let players = [
         answer: {answer: 'no', correct: true}
     }
 ]
-db.createRecord(players,1,1);
 
-// module.exports = database;
+
+module.exports = database;

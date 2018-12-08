@@ -17,5 +17,7 @@ module.exports = function(app) {
     app.get("/results", (req, res) => {
         res.render('results')
     })
-
+    app.get('/ready', (req,res)=>{
+        res.render('ready_page')
+    })
 }

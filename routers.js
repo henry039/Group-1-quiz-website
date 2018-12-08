@@ -2,6 +2,9 @@ module.exports = function(app) {
     app.get("/", (req, res) => {
         res.render('index')
     })
+    app.post("/", (req, res)=>{
+        console.log(req.body)
+    })
     app.get("/profile_page", (req, res) => {
         res.render('profile_page')
     })
@@ -11,8 +14,11 @@ module.exports = function(app) {
     app.post("/question_create", (req, res)=>{
         console.log(req.body)
     })
-    app.get("/quiz-create", (req, res) => {
+    app.get("/quiz_create", (req, res) => {
         res.render('quiz_create')
+    })
+    app.post("/quiz_create", (req, res) => {
+        console.log(req.body)
     })
     app.get("/results", (req, res) => {
         res.render('results')

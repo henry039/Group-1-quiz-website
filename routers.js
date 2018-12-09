@@ -1,3 +1,4 @@
+const data = require('./dummy_quiz.json')
 module.exports = function(app) {
     app.get("/", (req, res) => {
         res.render('index',{
@@ -16,7 +17,16 @@ module.exports = function(app) {
         })
     })
     app.post("/quiz_create", (req, res) => {
-        console.log(JSON.stringify(req.body))
+        console.log((req.body))
+    })
+    app.get('/quiz_edit', (req,res)=>{
+        res.render('quiz_edit',{
+            pageName : 'quiz_edit',
+            data : data
+        })
+    })
+    app.post('/quiz_edit', (req, res)=>{
+        console.log(req.body)
     })
     app.get("/results", (req, res) => {
         res.render('results',{

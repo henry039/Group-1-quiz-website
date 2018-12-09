@@ -140,7 +140,7 @@ document.getElementById('ADD_quiz').onclick = function () {
             answers : answers
         })
     })
-    console.log({
+    axios.post('/quiz_create', {
         quiz : title,
         description : description,
         questions : questions

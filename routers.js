@@ -1,5 +1,7 @@
 const auth = require('./authentication');
-const data = require('dummy_quiz.json')
+const dummyData = require('./dummy_quiz.json');
+
+console.log("This is what we want?" + dummyData);
 
 module.exports = function(app) {
     //get request for index page
@@ -27,7 +29,7 @@ module.exports = function(app) {
         })
     })
     app.post("/quiz_create", (req, res) => {
-        console.log((req.body))
+        console.log((req.body)) 
     })
     app.get('/quiz_edit', (req,res)=>{
         res.render('quiz_edit',{
@@ -49,7 +51,8 @@ module.exports = function(app) {
     })
     app.get("/game", (req, res) => {
         res.render('game', {
-            data : JSON.parse(data)
+            // data : JSON.parse(data)
+            pageName : 'game'
         })
     })
 }

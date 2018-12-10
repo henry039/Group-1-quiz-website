@@ -6,7 +6,20 @@ const parser = require('body-parser')
 let app = express();
 
 //setup template engine
-app.engine('handlebars' , hb({ defaultLayout: 'main'}));
+let hbs = hb.create({
+    defaultLayout: 'main',
+    // layoutsDir : __dirname + '/xxxx',
+    // partialDir :  __dirname + '/xxxx',
+    helpers: {
+        checkTIME: function (input, value) {
+            return input === value.toString() ? 'selected = "selected"' : '';
+        },
+        checkCOR :  function (input) {
+            return input ? 'active' : '';
+        }
+    }
+})
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 //static files

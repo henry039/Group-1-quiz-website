@@ -19,7 +19,7 @@ let questionsapp = `
                 <br>
                 <label for="title">Time (seconds)</label>
                 <select class="question_time">
-                    <option vlue="10">10</option>
+                    <option value="10">10</option>
                     <option value="15">15</option>
                     <option value="20">20</option>
                     <option value="25" selected="selected">25</option>

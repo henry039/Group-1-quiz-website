@@ -26,10 +26,10 @@
                 <br>
                 <label for="title">Time (seconds)</label>
                 <select class="question_time">
-                    <option vlue="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="25" selected="selected">25</option>
+                    <option value="10" {{checkTIME this.time 10}}>10</option>
+                    <option value="15" {{checkTIME this.time 15}}>15</option>
+                    <option value="20" {{checkTIME this.time 20}}>20</option>
+                    <option value="25" {{checkTIME this.time 25}}>25</option>
                 </select>
                 <br>
                 <div class="answer_field">
@@ -37,7 +37,7 @@
                     <div class="answer_item">
                         <label for="question_answer">Answers</label>
                         <input type="text" name="answer" class="question_answer" value="{{answer}}">
-                        <span class="CHECK_correct">❌</span>
+                        <span class="CHECK_correct {{checkCOR correct}}">{{#if correct}}✔️{{else}}❌{{/if}}</span>
                         <button class="DELETE_answer">delete</button>
                     </div>
                     {{/each}}

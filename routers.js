@@ -1,7 +1,6 @@
 const auth = require('./authentication');
-
-const data = require('./dummy_quiz.json')
-const db = new (require('./databaseManage.js'))
+// const data = require('./dummy_quiz.json')
+// const db = new (require('./databaseManage.js'))
 module.exports = function(app) {
     //get request for index page
     app.get("/", (req, res) => {

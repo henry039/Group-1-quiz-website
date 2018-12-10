@@ -108,6 +108,7 @@ class database{
     deleteQuestion(questionId,quizId,userId){
         return knex.transaction(async trx=>{
             await trx('questions').where('quizId',quizId).andWhere('userId',userId).andWhere('id',questionId).del();
+            await trx('questions').decrement('id',1).where('userId',userId).andWhere('quizId',quizId).andWhere('id','>',questionId);
         })
     }
 
@@ -151,4 +152,6 @@ class database{
 
 }
 
-module.exports = database;
+db.appendQuestion()
+
+// module.exports = database;

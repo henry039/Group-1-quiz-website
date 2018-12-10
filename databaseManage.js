@@ -34,9 +34,6 @@ class database{
                 userId: userId
             };
         })
-        .catch(err => {
-            console.log(err);
-        })
     }
 
     getQuizDetail(quizId,userId){
@@ -44,7 +41,7 @@ class database{
         .then(arr=>{
             console.log(arr[0]);
             return(arr[0]);
-        });
+        })
     }
 
     editQuizDetail(topic,description,quizId,userId){ 
@@ -60,9 +57,6 @@ class database{
                 description: description
             }).where('id',quizId).andWhere('userId',userId);
         })
-        .catch(err => {
-            console.log(err)
-        })
     }
 
     deleteQuiz(quizId,userId){
@@ -70,9 +64,6 @@ class database{
                 await trx('questions').where('quizId',quizId).andWhere('userId',userId).del();
                 await trx('quizzes').where('id',quizId).andWhere('userId',userId).del();
             })
-        .catch(err =>{
-            console.log(err);
-        })
     }
 
     appendQuestion(question,answers,time,quizId,userId){ //must work after quiz is created
@@ -93,16 +84,10 @@ class database{
                 quizId: quizId
             });
         })
-        .catch(err =>{
-            console.log(err);
-        })
     }
 
     getQuestions(userId,quizId){
         return knex('questions').where('userId', userId ).andWhere('quizId', quizId) //return an array concataining question objects
-        .catch(err =>{
-            console.log(err);
-        })
     }
 
     editQuestion(question,answers,questionId,quizId,userId){ //must work after quiz is created
@@ -118,18 +103,12 @@ class database{
                 answers : JSON.stringify(answers)
             }).where('userId',userId).andWhere('quizId',quizId).andWhere('id',questionId);
         })
-        .catch(err =>{
-            console.log(err);
-        })
     }
 
     deleteQuestion(questionId,quizId,userId){
         return knex.transaction(async trx=>{
             await trx('questions').where('quizId',quizId).andWhere('userId',userId).andWhere('id',questionId).del();
         })
-        .catch(err =>{
-            console.log(err);
-        }) 
     }
 
 
@@ -187,5 +166,7 @@ let players = [
     }
 ]
 
+db.createQuizStructure('great',1)
 
-module.exports = database;
+
+// module.exports = database;

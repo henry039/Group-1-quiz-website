@@ -1,6 +1,12 @@
 const auth = require('./authentication');
 // const data = require('./dummy_quiz.json')
 // const db = new (require('./databaseManage.js'))
+const dummyData = require('./dummy_quiz.json');
+const fs = require('fs');
+
+let dummyDataJSON = fs.readFileSync('./dummy_quiz.json');
+let parsedDummyDataJSON = JSON.parse(dummyDataJSON);
+
 module.exports = function(app) {
     //get request for index page
     app.get("/", (req, res) => {
@@ -48,6 +54,11 @@ module.exports = function(app) {
         res.render('ready_page')
     })
     app.get("/game", (req, res) => {
-        res.render('game')
+        res.render('game', {
+            pageName : 'game'
+        })
+    })
+    app.post("/game", (req, res) => {
+        res.json(parsedDummyDataJSON);
     })
 }

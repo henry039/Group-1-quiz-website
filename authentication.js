@@ -66,7 +66,4 @@ module.exports = class Auth {
             });
         });
     };
-    // play() {
-
-    // };
 }

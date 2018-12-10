@@ -1,4 +1,5 @@
 const data = require('./dummy_quiz.json')
+const db = new (require('./databaseManage.js'))
 module.exports = function(app) {
     app.get("/", (req, res) => {
         res.render('index',{
@@ -17,7 +18,7 @@ module.exports = function(app) {
         })
     })
     app.post("/quiz_create", (req, res) => {
-        console.log((req.body))
+        console.log((req.body)) 
     })
     app.get('/quiz_edit', (req,res)=>{
         res.render('quiz_edit',{

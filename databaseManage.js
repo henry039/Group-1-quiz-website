@@ -151,22 +151,4 @@ class database{
 
 }
 
-
-let db = new database();
-let players = [
-    {
-        name:'james',
-        questionId: 1,
-        answer: {answer: 'yes', correct: false}
-    },
-    {
-        name:'kat',
-        questionId: 1,
-        answer: {answer: 'no', correct: true}
-    }
-]
-
-db.createQuizStructure('great',1)
-
-
-// module.exports = database;
+module.exports = database;

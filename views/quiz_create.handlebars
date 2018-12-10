@@ -1,31 +1,22 @@
+<!-- quiz -->
 <div id="quiz_detail">
-    <form action="" method="post">
-        <label for="title">Title</label>
-        <input type="text" name="title" id="quiz_title">
-    </form>
+    <label for="quiz_title">Title</label>
+    <input type="text" name="quiz_title" id="quiz_title">
+    <label for="quiz_description">Description</label>
+    <input type="text" name="quiz_description" id="quiz_description">
 </div>
+
 <div id="listofquestion">
-    <div id="item">
-        <div>Question index</div>
-        <div>Questions</div>
-        <div>
-            time limit
-            <select name="quiz_time">
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <option value="25">25</option>
-            </select>
-        </div>
-        <span>
-            <a href="/question_create"><button>Edit</button></a>
-            <br>
-            <a href="/question_create"><button>Delete</button></a>
-        </span>
-    </div>
+    <!-- append questions -->
 </div>
-<div id="create_question">
+
+<!-- extend question -->
+<div id="ADD_question">
     Create Question
     <br>
-    <a href="question_create.html"><button>+</button></a>
+    <button id="ADD_question">+</button>
+</div>
+
+<div>
+    <button id="ADD_quiz">sumbit</button>
 </div>

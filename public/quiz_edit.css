@@ -1,0 +1,35 @@
+.question_main {
+    /* overflow-x: hidden;
+    overflow-y: scroll; */
+    overflow: hidden;
+    width: 500px;
+    height: 0px;
+    transition: .5s;
+}
+
+.show{
+    height: 200px;
+}
+
+.slider {
+    display: flex;
+    width: 200%;
+    transition: 0.5s;
+}
+
+.expanded {
+    transform: translateX(-50%);    
+}
+
+.toggle {
+    flex: 0 0 50%;
+}
+
+.input {
+    flex: auto;
+}
+
+.SAVE_question {
+    flex: none;
+}
+

@@ -1,7 +1,9 @@
 const auth = require('./authentication');
 const dummyData = require('./dummy_quiz.json');
+const fs = require('fs');
 
-console.log("This is what we want?" + dummyData);
+let dummyDataJSON = fs.readFileSync('./dummy_quiz.json');
+let parsedDummyDataJSON = JSON.parse(dummyDataJSON);
 
 module.exports = function(app) {
     //get request for index page
@@ -51,8 +53,10 @@ module.exports = function(app) {
     })
     app.get("/game", (req, res) => {
         res.render('game', {
-            // data : JSON.parse(data)
             pageName : 'game'
         })
+    })
+    app.post("/game", (req, res) => {
+        res.json(parsedDummyDataJSON);
     })
 }

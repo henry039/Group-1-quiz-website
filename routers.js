@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 const auth = require('./authentication');
+const data = require('dummy_quiz.json')
 
-=======
-const data = require('./dummy_quiz.json')
->>>>>>> 93768c1bc3fc8fb2c95319c9a0b4928cf2ef9244
 module.exports = function(app) {
     //get request for index page
     app.get("/", (req, res) => {
@@ -24,19 +21,6 @@ module.exports = function(app) {
     app.get("/profile_page", (req, res) => {
         res.render('profile_page')
     })
-<<<<<<< HEAD
-    //get request for question create page
-    app.get("/question_create", (req, res) => {
-        res.render('question_create')
-    })
-    //post request for question create page
-    app.post("/question_create", (req, res)=>{
-        console.log(req.body)
-    })
-    //get request for quiz create page
-    app.get("/quiz_create", (req, res) => {
-        res.render('quiz_create')
-=======
     app.get("/quiz_create", (req, res) => {
         res.render('quiz_create',{
             pageName : 'quiz_create'
@@ -53,7 +37,6 @@ module.exports = function(app) {
     })
     app.post('/quiz_edit', (req, res)=>{
         console.log(req.body)
->>>>>>> 93768c1bc3fc8fb2c95319c9a0b4928cf2ef9244
     })
     //get request for results page
     app.get("/results", (req, res) => {
@@ -64,16 +47,9 @@ module.exports = function(app) {
     app.get('/ready', (req,res)=>{
         res.render('ready_page')
     })
-<<<<<<< HEAD
     app.get("/game", (req, res) => {
-        res.render('game')
+        res.render('game', {
+            data : JSON.parse(data)
+        })
     })
-=======
-    // app.get("/question_create", (req, res) => {
-    //     res.render('question_create')
-    // })
-    // app.post("/question_create", (req, res)=>{
-    //     console.log(req.body)
-    // })
->>>>>>> 93768c1bc3fc8fb2c95319c9a0b4928cf2ef9244
 }

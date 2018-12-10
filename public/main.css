@@ -1,0 +1,61 @@
+/*==================================================================================
+Main
+====================================================================================*/
+
+body {
+    font-family: 'Gamja Flower', cursive;
+    font-size: 25px;
+}
+
+a {
+  color: white;
+}
+
+/*==================================================================================
+Navbar
+====================================================================================*/
+
+#navBarContainer {
+  padding: 0;
+}
+
+nav {
+  background-color: hsl(0, 0%, 96%);
+  background-image: linear-gradient(to right, rgb(231, 67, 67),rgb(228, 176, 79),rgb(241, 241, 100),rgb(63, 138, 63),rgb(70, 70, 214),rgb(97, 71, 116),violet); 
+  border-bottom: 1px solid;
+  border-bottom-color: #cccccc;
+}
+
+nav li {
+  list-style: none;
+  font-size: 22px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-flow: row;
+}
+
+#navBarRow {
+  width: 100%;
+}
+
+#navBarLinks {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#ulID {
+  padding: 0;
+  margin: 0;
+}
+
+#logoID {
+  display: flex;
+  justify-content: flex-start;
+}
+
+#logo {
+  font-size: 35px;
+  padding-left: 20px;
+  color: white;
+}

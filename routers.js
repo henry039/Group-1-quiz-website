@@ -1,14 +1,24 @@
+const auth = require('./authentication');
+
 const data = require('./dummy_quiz.json')
 const db = new (require('./databaseManage.js'))
 module.exports = function(app) {
+    //get request for index page
     app.get("/", (req, res) => {
         res.render('index',{
             pageName : 'index'
         })
     })
+    //post request for index page login.
     app.post("/", (req, res)=>{
-        console.log(req.body)
+        let authPost = new auth(req, res);
+        if(req.body.hasOwnProperty('loginEmail') === true) {
+            authPost.login();
+        } else if (req.body.hasOwnProperty('email') === true) {
+            authPost.signup();
+        }
     })
+    //get request for profile page
     app.get("/profile_page", (req, res) => {
         res.render('profile_page')
     })
@@ -29,6 +39,7 @@ module.exports = function(app) {
     app.post('/quiz_edit', (req, res)=>{
         console.log(req.body)
     })
+    //get request for results page
     app.get("/results", (req, res) => {
         res.render('results',{
             pageName : 'results'
@@ -37,10 +48,7 @@ module.exports = function(app) {
     app.get('/ready', (req,res)=>{
         res.render('ready_page')
     })
-    // app.get("/question_create", (req, res) => {
-    //     res.render('question_create')
-    // })
-    // app.post("/question_create", (req, res)=>{
-    //     console.log(req.body)
-    // })
+    app.get("/game", (req, res) => {
+        res.render('game')
+    })
 }

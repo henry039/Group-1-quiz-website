@@ -31,8 +31,8 @@ $(function(){
         let signUpPassword = $('input[name=sign-up-password]').val();
 
         axios.post('/', {
-            signUpEmail : signUpEmail,
-            signUpPassword : signUpPassword
+            email : signUpEmail,
+            password : signUpPassword
         })
     })
 

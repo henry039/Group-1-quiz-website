@@ -152,6 +152,4 @@ class database{
 
 }
 
-db.appendQuestion()
-
-// module.exports = database;
+module.exports = database;

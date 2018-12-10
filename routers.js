@@ -34,5 +34,7 @@ module.exports = function(app) {
     app.get("/results", (req, res) => {
         res.render('results')
     })
-
+    app.get("/game", (req, res) => {
+        res.render('game')
+    })
 }

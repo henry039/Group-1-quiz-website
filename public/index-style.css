@@ -1,23 +1,99 @@
+/*==================================================================================
+Main
+====================================================================================*/
+
 body {
-    background-color: rgb(228, 228, 228);
+
 }
+
+/*==================================================================================
+Top Section
+====================================================================================*/
 
 #top-section {
     margin: auto;
-    width: 75%;
-    height: 700px;
-    background-color: rgb(133, 206, 133);
-    border-radius: 8px;
+    width: 100 wh;
+    height: 550px;
+    background-color: rgba(243, 243, 243, 0.842);
+    border-bottom: 1px solid;
+    border-bottom-color: #f0f0f0;
 }
 
-#switchButton {
-    background-color: rgb(236, 255, 127)
+/*==================================================================================
+Images
+====================================================================================*/
+
+#quiztimeIMG {
+    width: 500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    padding-top: 60px;
 }
+
+#quiz-question-markIMG {
+    width: 280px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*==================================================================================
+Bottom Section
+====================================================================================*/
 
 #form-section {
     display: block;
-    text-align: center;;
+    text-align: center;
+    margin-top: 20px;
 }
+
+#rowContainer{
+    width: 60%;
+    margin: auto;
+}
+
+#left-section {
+    margin: 0;
+    display: block;
+    vertical-align: top;
+}
+
+#right-section {
+    margin: 0;
+    display: block;
+    vertical-align: top;
+}
+
+.well {
+    border-style:solid;
+    border-color: red green blue yellow;
+    border-radius: 8px;
+    padding: 5%;
+    margin-bottom: 4%;
+    height: 300px;
+}
+
+/*==================================================================================
+Text
+====================================================================================*/
+
+#loginText {
+    font-size: 40px;
+}
+
+#IDText {
+    font-size: 40px;
+}
+
+#playText {
+    font-size: 40px;
+}
+
+/*==================================================================================
+Buttons and Submits
+====================================================================================*/
 
 #login_Sign-up-submit {
     display: inline;
@@ -26,6 +102,18 @@ body {
 #play-submit {
     display: inline;
 }
+
+button { 
+    margin: 1%;
+} 
+
+#switchButton {
+    margin-top: 30px;
+}
+
+/*==================================================================================
+Forms
+====================================================================================*/
 
 #login-form {
     display: block;

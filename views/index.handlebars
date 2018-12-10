@@ -1,21 +1,36 @@
 <section id="top-section">
-
+    <img src="quiztime.png" id="quiztimeIMG">
+    <img src="quiz-question-mark.png" id="quiz-question-markIMG">
 </section>
 <section id="form-section">
-    <div id="login_Sign-up-submit">
-        <button id="switchButton" class="btn btn-default" name="submitButton">Click to Register</button>
-        <a></a><form action="" id="login-form">
-            Login<input type="text" name="login-email" placeholder="email..."><input type="password" name="login-password" placeholder="Password"><input type="submit" value="Submit" name="logInSubmit">
-        </form>
-        <form action="" id="sign-up-form">
-            Sign-up<input type="text" name="sign-up-email" placeholder="email..."><input type="password" name="sign-up-password" placeholder="Password"><input type="submit" value="Submit" name="signUpSubmit">
-        </form>
-    </div>
-    <div id="play-submit">
-        <form action="">
-            Play<input type="number" name="playPin" placeholder="Pin">
-            <input type="text" name="playHandle" placeholder="Handle"><input type="submit" value="Submit" name="playSubmit">
-        </form>
+    <div class="container-fluid">
+        <div class="row" id="rowContainer">
+            <div class="col-md-6" id="left-section">
+                <div class="well">
+                    <div id="login_Sign-up-submit">
+                        <a></a><form action="" id="login-form">
+                            <span id="loginText"><strong>Login</strong></span><input type="text" name="login-email" placeholder="Email..." class="form-control"><input type="password" class="form-control" name="login-password" placeholder="Password"><button type="submit" name="logInSubmit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>
+                        </form>
+                        <form action="" id="sign-up-form">
+                            <span id="IDText"><strong>Sign-up</strong></span><input type="text" name="sign-up-email" placeholder="Email..." class="form-control"><input type="password" class="form-control" name="sign-up-password" placeholder="Password"><button type="submit" name="signUpSubmit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>
+                        </form>
+                        <div>
+                            <button id="switchButton" class="btn btn-info" name="submitButton"><i class="fas fa-user-plus"></i> Click to Register</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="right-section">
+                <div class="well">
+                    <div id="play-submit">
+                        <form action="">
+                            <span id="playText"><strong>Play</strong></span><input type="number" name="playPin" placeholder="Pin" class="form-control">
+                            <input type="text" name="playHandle" placeholder="Handle" class="form-control"><button type="submit" name="playSubmit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 <script src="index.js"></script>

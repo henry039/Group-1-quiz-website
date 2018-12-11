@@ -13,8 +13,6 @@
 //     location.reload();
 // }
 
-let totalPlayers = 10;
-
 //====================================================================================
 // Socket Stuff
 //====================================================================================
@@ -29,14 +27,24 @@ let counter = document.getElementById('counter');
 //emit events
 submitButton.addEventListener('click', function() {
     socket.emit('chat', 0);
+    document.getElementById("submitAnswerBtn").disabled = true;
 })
 
 //listen for events (used for counter)
+let totalPlayers = 10;
 let counterStore = 0;
+
 socket.on('chat', function(data) {
-    counterStore++;
-    counter.innerHTML += '<li>' + counterStore + '/' + totalPlayers + '</li>'
+    counterStore = data;
+    if (data < totalPlayers) {
+        counter.innerHTML = data + '/' + totalPlayers
+        console.log(data);
+    } else {
+        counter.innerHTML = data + '/' + totalPlayers + ' All players ready'
+        console.log(data);
+    }
 });
+
 
 //====================================================================================
 // Database Stuff

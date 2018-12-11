@@ -13,9 +13,6 @@ const knex = require('knex')({
 
 class database{
     constructor(){}
-    localSignIn(){}
-    logIn(){}
-    logOut(){}
     createQuizStructure(topic,userId,description){  //create quiz and append quiz link to quiz list
         return knex.transaction(async trx=>{
             if (topic === undefined) {
@@ -39,7 +36,6 @@ class database{
     getQuizDetail(quizId,userId){
         return knex('quizzes').where('id', quizId).andWhere('userId', userId)
         .then(arr=>{
-            console.log(arr[0]);
             return(arr[0]);
         })
     }

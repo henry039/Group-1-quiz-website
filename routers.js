@@ -1,5 +1,12 @@
-const data = require('./dummy_quiz.json')
+const data = require('./dummy_quiz.json');
+const passport = require('passport');
+const setUpPassportStrategy = require('./passportStrategy')
+
+
 module.exports = function(app) {
+
+    setUpPassportStrategy(app);
+
     app.get("/", (req, res) => {
         res.render('index',{
             pageName : 'index'
@@ -42,4 +49,9 @@ module.exports = function(app) {
     // app.post("/question_create", (req, res)=>{
     //     console.log(req.body)
     // })
+
+    app.post('/login', passport.authenticate('local-login',(req,res)=>{
+        let user = req.user;
+        console.log(user);
+    }))
 }

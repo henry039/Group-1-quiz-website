@@ -1,18 +1,3 @@
-
-// document.getElementById("question").style.display = "block";
-// document.getElementById("results").style.display = "none";
-
-// function alert1() {
-//     document.getElementById("question").style.display = "none";
-//     document.getElementById("results").style.display = "block";
-// }
-
-// setTimeout(alert1, 3000);
-
-// document.getElementById("aButton").onclick = function reload () {
-//     location.reload();
-// }
-
 //====================================================================================
 // Socket Stuff
 //====================================================================================
@@ -34,17 +19,38 @@ submitButton.addEventListener('click', function() {
 let totalPlayers = 10;
 let counterStore = 0;
 
+let everyoneSubmitted = false;
+
 socket.on('chat', function(data) {
     counterStore = data;
     if (data < totalPlayers) {
         counter.innerHTML = data + '/' + totalPlayers
-        console.log(data);
+        // console.log(data);
+        // console.log(everyoneSubmitted);
     } else {
-        counter.innerHTML = data + '/' + totalPlayers + ' All players ready'
-        console.log(data);
+        everyoneSubmitted = true;
+        counter.innerHTML = data + '/' + totalPlayers + ' All players submitted'
+        // console.log(data);
+        switch2()
+        // console.log(everyoneSubmitted)
     }
 });
 
+
+let btn = document.getElementById('nextQuestion');
+
+btn.addEventListener('click', function() {
+    socket.emit('nextQuestion');
+})
+
+//====================================================================================
+// HTML Stuff
+//====================================================================================
+
+function switch2(){
+    document.getElementById("question").style.display = "none";
+    document.getElementById("results").style.display = "block";
+}
 
 //====================================================================================
 // Database Stuff
@@ -64,7 +70,7 @@ function questionLoop(data){
             outputObj.Answers.push(data[i].answers[j].answer);
         }
     }        
-    console.log(arr);
+    // console.log(arr);
     return arr;
 }
 

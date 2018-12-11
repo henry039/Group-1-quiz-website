@@ -38,12 +38,12 @@ let io = socket(server);
 let data = 0;
 io.on('connection', function(socket) {
     console.log('made socket connection', socket.id);
-    socket.on('next', function() {
-        data = 0;
-    })
     socket.on('chat', function() {
         data++;
         console.log(data);
         io.sockets.emit('chat', data);
     });
+    socket.on('nextQuestion', () => {
+        data = 0;
+    })
 });

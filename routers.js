@@ -1,20 +1,33 @@
 const data = require('./dummy_quiz.json');
 const passport = require('passport');
 const setUpPassportStrategy = require('./passportStrategy')
+const auth = require('./authentication');
+const dummyData = require('./dummy_quiz.json');
+const fs = require('fs');
 
+let dummyDataJSON = fs.readFileSync('./dummy_quiz.json');
+let parsedDummyDataJSON = JSON.parse(dummyDataJSON);
 
 module.exports = function(app) {
 
     setUpPassportStrategy(app);
 
+    //get request for index page
     app.get("/", (req, res) => {
         res.render('index',{
             pageName : 'index'
         })
     })
+    //post request for index page login.
     app.post("/", (req, res)=>{
-        console.log(req.body)
+        let authPost = new auth(req, res);
+        if(req.body.hasOwnProperty('loginEmail') === true) {
+            authPost.login();
+        } else if (req.body.hasOwnProperty('email') === true) {
+            authPost.signup();
+        }
     })
+    //get request for profile page
     app.get("/profile_page", (req, res) => {
         res.render('profile_page')
     })
@@ -24,7 +37,7 @@ module.exports = function(app) {
         })
     })
     app.post("/quiz_create", (req, res) => {
-        console.log((req.body))
+        console.log((req.body)) 
     })
     app.get('/quiz_edit', (req,res)=>{
         res.render('quiz_edit',{
@@ -35,6 +48,7 @@ module.exports = function(app) {
     app.post('/quiz_edit', (req, res)=>{
         console.log(req.body)
     })
+    //get request for results page
     app.get("/results", (req, res) => {
         res.render('results',{
             pageName : 'results'
@@ -43,15 +57,18 @@ module.exports = function(app) {
     app.get('/ready', (req,res)=>{
         res.render('ready_page')
     })
-    // app.get("/question_create", (req, res) => {
-    //     res.render('question_create')
-    // })
-    // app.post("/question_create", (req, res)=>{
-    //     console.log(req.body)
-    // })
 
     app.post('/login', passport.authenticate('local-login',(req,res)=>{
         let user = req.user;
         console.log(user);
     }))
+    
+    app.get("/game", (req, res) => {
+        res.render('game', {
+            pageName : 'game'
+        })
+    })
+    app.post("/game", (req, res) => {
+        res.json(parsedDummyDataJSON);
+    })
 }

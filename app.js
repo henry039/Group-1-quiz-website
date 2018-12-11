@@ -1,7 +1,7 @@
 const express = require('express');
 const hb = require('express-handlebars');
-const router = require("./routers.js");
-const parser = require('body-parser')
+const router = require('./routers');
+const parser = require('body-parser');
 
 let app = express();
 

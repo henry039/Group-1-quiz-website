@@ -1,7 +1,5 @@
 const auth = require('./authentication');
-// const data = require('./dummy_quiz.json')
-// const db = new (require('./databaseManage.js'))
-const dummyData = require('./dummy_quiz.json');
+const dbConnect = require('./serializeDB.js')
 const fs = require('fs');
 
 let dummyDataJSON = fs.readFileSync('./dummy_quiz.json');
@@ -33,12 +31,12 @@ module.exports = function(app) {
         })
     })
     app.post("/quiz_create", (req, res) => {
-        console.log((req.body)) 
+        dbConnect(req.body)
     })
     app.get('/quiz_edit', (req,res)=>{
         res.render('quiz_edit',{
             pageName : 'quiz_edit',
-            data : data
+            // data : dbConnect({method : 'get'})
         })
     })
     app.post('/quiz_edit', (req, res)=>{

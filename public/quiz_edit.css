@@ -15,6 +15,7 @@
     display: flex;
     width: 200%;
     transition: 0.5s;
+    height: 100%;
 }
 
 .expanded {
@@ -31,5 +32,14 @@
 
 .SAVE_question {
     flex: none;
+}
+
+.question_field{
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }
 

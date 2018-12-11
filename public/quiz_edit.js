@@ -84,10 +84,11 @@ $("#ADD_question").click(function () {
 
 [...document.getElementsByClassName('DELETE_question')].forEach((ele, index) => {
     ele.onclick = function () {
-        document.getElementsByClassName('question_main')[index].classList.remove('show')
-        setTimeout(() => {
-            document.getElementsByClassName('question_main')[index].remove();
-        }, 500);
+        console.log('del '+index)
+        // document.getElementsByClassName('question_main')[index].classList.remove('show')
+        // setTimeout(() => {
+        //     document.getElementsByClassName('question_main')[index].remove();
+        // }, 500);
     }
 });
 
@@ -126,6 +127,7 @@ let cb = (mutationListe, observer) => {
             [...document.getElementsByClassName('EDIT_question')].forEach((ele, index) => {
                 ele.onclick = () => {
                     document.getElementsByClassName('slider')[index].className = 'slider expanded';
+                    // axios update question ID
                 }
             });
 
@@ -135,6 +137,8 @@ let cb = (mutationListe, observer) => {
 
                     document.getElementsByClassName('SHOW_question_time')[index].innerText = document.getElementsByClassName('question_time')[index].value + ' s';
                     document.getElementsByClassName('SHOW_question_itself')[index].innerText = document.getElementsByClassName('question_itself')[index].value;
+
+                    // axios create question with index check from get index
                 }
             });
 
@@ -144,6 +148,7 @@ let cb = (mutationListe, observer) => {
                     setTimeout(() => {
                         document.getElementsByClassName('question_main')[index].remove();
                     }, 500);
+                    // axios delete question ID
                 }
             });
 
@@ -189,6 +194,8 @@ document.getElementById('ADD_quiz').onclick = function () {
         })
     })
     axios.post('/quiz_edit', {
+        // axios edit quiz detail
+        method : 'update',
         quiz: title,
         description: description,
         questions: questions

@@ -2,8 +2,13 @@ const express = require('express');
 const hb = require('express-handlebars');
 const router = require("./routers.js");
 const parser = require('body-parser');
+const socket = require('socket.io');
 
+//app setup
 let app = express();
+let server = app.listen(3000, function () {
+    console.log("Listening on port 3000");
+});
 
 //setup template engine
 let hbs = hb.create({
@@ -28,6 +33,13 @@ app.use(parser.urlencoded({ extended: false }));
 app.use(parser.json())
 router(app);
 
-//listen to port
-app.listen(3000);
-console.log('You are listening to port 3000');
+//socket and port setup
+let io = socket(server);
+
+io.on('connection', function(socket) {
+    console.log('made socket connection', socket.id);
+
+    socket.on('chat', function(data) {
+        io.sockets.emit('chat', data)
+    });
+});

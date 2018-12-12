@@ -46,10 +46,7 @@ module.exports = (app)=>{
             try{
                 user = JSON.parse(user)
                 let hashPassword = await bcrypt.hashPassword(password);
-                console.log(hashPassword)
-                console.log(user.email)
                 let users = await knex('users').where('email',user.email);
-                console.log(users)
 
                if(users.length === 0){ //if there is no such username
                     let [userId] = await knex('users').insert({
@@ -59,7 +56,7 @@ module.exports = (app)=>{
                     }).returning('id')
 
 
-                    let signUpUser = await knex('users').where('id',userId)
+                    let [signUpUser] = await knex('users').where('id',userId)
                     return done(null,signUpUser);
 
                 }else{

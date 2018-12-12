@@ -48,13 +48,16 @@ let quesetion = Handlebars.compile(`
         <div id="question">
             <h1>{{question}}</h1>
         </div>
-        {{#each answer}}
+        {{#each answers |value key|}}
         <div id="results">
-            <h1>{{result}}</h1>
+            <h1>{{value}}</h1>
         </div>
         {{/each}}
     </div>
 `)
+socket.on('render_for_next_question', (data)=>{
+    $('#question').html(question(data))
+})
 
 let btn = document.getElementById('nextQuestion');
 
@@ -76,28 +79,28 @@ function switch2(){
 //====================================================================================
 
 //function to create an array with the questions and answers in an object.
-function questionLoop(data){
-    let arr = [];
-    for(let i = 0; i < data.length; i++) {
-        let currentQuestion = data[i].question
-        let outputObj = {
-            Question: currentQuestion,
-            Answers: []
-        }
-        arr.push(outputObj);
-        for(let j = 0; j < (data[i].answers).length; j++) {
-            outputObj.Answers.push(data[i].answers[j].answer);
-        }
-    }        
+// function questionLoop(data){
+//     let arr = [];
+//     for(let i = 0; i < data.length; i++) {
+//         let currentQuestion = data[i].question
+//         let outputObj = {
+//             Question: currentQuestion,
+//             Answers: []
+//         }
+//         arr.push(outputObj);
+//         for(let j = 0; j < (data[i].answers).length; j++) {
+//             outputObj.Answers.push(data[i].answers[j].answer);
+//         }
+//     }        
     // console.log(arr);
-    return arr;
-}
+//     return arr;
+// }
 
-$(function(){
-    axios.post('/game', {
-    }).then((result) => {
-        questionLoop(result.data.questions);
-    }).catch((err) => {
-        console.log(err);
-    });
-});
+// $(function(){
+//     axios.post('/game', {
+//     }).then((result) => {
+//         questionLoop(result.data.questions);
+//     }).catch((err) => {
+//         console.log(err);
+//     });
+// });

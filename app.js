@@ -4,7 +4,7 @@ const router = require('./routers');
 const parser = require('body-parser');
 const session = require('express-session')
 // const socket = require('socket.io');
-const socket = require('socketIO.js')
+const socket = require('./socketIO.js')
 
 //app setup
 let app = express();
@@ -40,7 +40,7 @@ app.use(parser.json())
 router(app);
 
 //socket and port setup
-socket(server)
+// socket(server)
 // let io = socket(server);
 // let data = 0;
 // io.on('connection', function(socket) {

@@ -31,16 +31,20 @@ module.exports = function(app) {
         })
     })
     app.post("/quiz_create", (req, res) => {
-        dbConnect(req.body)
+        // dbConnect(req.body)
+    })
+    app.get('/api/quiz_edit', (req,res)=>{
+        res.send(dbConnect({method : 'get'}))
     })
     app.get('/quiz_edit', (req,res)=>{
         res.render('quiz_edit',{
             pageName : 'quiz_edit',
-            // data : dbConnect({method : 'get'})
+            data : dbConnect({method : 'get'})
         })
     })
     app.post('/quiz_edit', (req, res)=>{
-        console.log(req.body)
+        // console.log(req.body)
+        dbConnect(req.body)
     })
     //get request for results page
     app.get("/results", (req, res) => {

@@ -86,7 +86,7 @@ class database{
         return knex('questions').where('userId', userId ).andWhere('quizId', quizId) //return an array concataining question objects
     }
 
-    editQuestion(question,answers,questionId,quizId,userId){ //must work after quiz is created
+    editQuestion(question,answers,index,quizId,userId){ //must work after quiz is created
         return knex.transaction(async trx=>{
             if(question === undefined){
                 throw new Error('question must be setted')
@@ -94,6 +94,7 @@ class database{
             if(answers.length < 2){
                 throw new Error('answer must be 2 or more')
             }
+            let questionId = index + 1;
             await trx('questions').update({
                 question: question,
                 answers : JSON.stringify(answers)

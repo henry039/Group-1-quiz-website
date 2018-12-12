@@ -1,6 +1,7 @@
 const passport = require('passport');
-const LocalStrategy = require('passport-local');
+const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('./bcrypt')
+require('dotenv').config();
 const knex = require('knex')({
     client:'postgresql',
     connection:{
@@ -9,10 +10,6 @@ const knex = require('knex')({
         password: process.env.DATABASE_PASSWORD
     }
 });
-require('dotenv').config();
-
-
-const brcypt = require('./bcrypt');
 
 module.exports = (app)=>{
     app.use(passport.initialize());
@@ -28,7 +25,7 @@ module.exports = (app)=>{
                     return done(null,false,{message: 'invalid credentials'});
                 }else{
                     let user = users[0];
-                    let result = await brcypt.checkPassword(password,user.password)
+                    let result = await bcrypt.checkPassword(password,user.password)
                     if(result){ //if the password is matched
                         return done(null,user);
                     }else{
@@ -36,35 +33,40 @@ module.exports = (app)=>{
                     }
                 } 
             }catch(err){
+                console.log(err);
                 return done(err);
             }
         }
     ))
 
-    passport.use('local-signin', new LocalStrategy({
+    passport.use('local-signup', new LocalStrategy({
             usernameField: 'user'
         },
         async (user,password,done) => {
             try{
-                let hashPassword = bcrypt.hashPassword(password);
-                let users = await knex('users').where({
-                    email: user.email
-               });
+                user = JSON.parse(user)
+                let hashPassword = await bcrypt.hashPassword(password);
+                console.log(hashPassword)
+                console.log(user.email)
+                let users = await knex('users').where('email',user.email);
+                console.log(users)
+
                if(users.length === 0){ //if there is no such username
                     let [userId] = await knex('users').insert({
-                        username: user.name,
+                        username: user.username,
                         email: user.email,
                         password: hashPassword
                     }).returning('id')
 
-                    user = await knex('users').where({id:userId})
 
-                    return done(null,user)
+                    let signUpUser = await knex('users').where('id',userId)
+                    return done(null,signUpUser);
 
                 }else{
                     return done(null,false,{message: 'email alreay exsit'});
                 }   
             }catch(err){
+                console.log(err);
                 return done(err);
             }
         }

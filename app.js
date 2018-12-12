@@ -2,8 +2,13 @@ const express = require('express');
 const hb = require('express-handlebars');
 const router = require('./routers');
 const parser = require('body-parser');
+const session = require('express-session')
 
 let app = express();
+
+app.use(session({
+    secret: 'superSecret'
+}))
 
 //setup template engine
 let hbs = hb.create({

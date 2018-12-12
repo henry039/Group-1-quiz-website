@@ -19,14 +19,23 @@ module.exports = function(app) {
         })
     })
     //post request for index page login.
-    app.post("/", (req, res)=>{
-        let authPost = new auth(req, res);
-        if(req.body.hasOwnProperty('loginEmail') === true) {
-            authPost.login();
-        } else if (req.body.hasOwnProperty('email') === true) {
-            authPost.signup();
-        }
+    // app.post("/", (req, res)=>{
+    //     let authPost = new auth(req, res);
+    //     if(req.body.hasOwnProperty('loginEmail') === true) {
+    //         authPost.login();
+    //     } else if (req.body.hasOwnProperty('email') === true) {
+    //         authPost.signup();
+    //     }
+    // })
+
+    app.post('/login', passport.authenticate('local-login'),(req,res) => {
+        console.log(req.user);
     })
+
+    app.post ('/signup',passport.authenticate('local-signup'),(req,res) => {
+        console.log(req.user);
+    })
+
     //get request for profile page
     app.get("/profile_page", (req, res) => {
         res.render('profile_page')
@@ -57,11 +66,6 @@ module.exports = function(app) {
     app.get('/ready', (req,res)=>{
         res.render('ready_page')
     })
-
-    app.post('/login', passport.authenticate('local-login',(req,res)=>{
-        let user = req.user;
-        console.log(user);
-    }))
     
     app.get("/game", (req, res) => {
         res.render('game', {

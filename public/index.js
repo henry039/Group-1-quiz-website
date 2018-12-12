@@ -12,27 +12,46 @@ switchButton.onclick = function() {
 };
 
 $(function(){
-    $('input[name=logInSubmit]').click(e=>{
+    $('form#login-form').submit(e=>{
         e.preventDefault();
 
         let loginEmail = $('input[name=login-email]').val();
         let loginPassword = $('input[name=login-password]').val();
+        
 
-        axios.post('/', {
-            loginEmail : loginEmail,
-            loginPassword : loginPassword
+        axios.post('/login', {
+            email : loginEmail,
+            password : loginPassword
+        })
+        .then(()=>{
+            console.log('done')
+        })
+        .catch(err=>{
+            console.log(err)
         })
     })
 
-    $('input[name=signUpSubmit]').click(e=>{
+    $('form#sign-up-form').submit(e=>{
         e.preventDefault();
 
         let signUpEmail = $('input[name=sign-up-email]').val();
         let signUpPassword = $('input[name=sign-up-password]').val();
+        let signUpUsername = $('input[name=sign-up-username]').val();
 
-        axios.post('/', {
-            email : signUpEmail,
+        let user = {
+            username: signUpUsername,
+            email: signUpEmail
+        }
+
+        axios.post('/signup', {
+            user: JSON.stringify(user),
             password : signUpPassword
+        })
+        .then(()=>{
+            console.log('done')
+        })
+        .catch(err=>{
+            console.log(err)
         })
     })
 

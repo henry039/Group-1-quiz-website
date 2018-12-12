@@ -3,10 +3,10 @@ const passport = require('passport');
 const setUpPassportStrategy = require('./passportStrategy')
 const auth = require('./authentication');
 const dbConnect = require('./serializeDB.js')
-const fs = require('fs');
+// const fs = require('fs');
 
-let dummyDataJSON = fs.readFileSync('./dummy_quiz.json');
-let parsedDummyDataJSON = JSON.parse(dummyDataJSON);
+// let dummyDataJSON = fs.readFileSync('./dummy_quiz.json');
+// let parsedDummyDataJSON = JSON.parse(dummyDataJSON);
 
 module.exports = function(app) {
 
@@ -76,7 +76,7 @@ module.exports = function(app) {
             pageName : 'game'
         })
     })
-    app.post("/game", (req, res) => {
-        res.json(parsedDummyDataJSON);
-    })
+    // app.post("/game", (req, res) => {
+    //     res.json(parsedDummyDataJSON);
+    // })
 }

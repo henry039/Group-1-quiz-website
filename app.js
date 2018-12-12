@@ -2,9 +2,9 @@ const express = require('express');
 const hb = require('express-handlebars');
 const router = require('./routers');
 const parser = require('body-parser');
-const session = require('express-session')
+const session = require('express-session');
 // const socket = require('socket.io');
-const socket = require('socketIO.js')
+const socketIO = require('./socketIO');
 
 //app setup
 let app = express();
@@ -40,7 +40,7 @@ app.use(parser.json())
 router(app);
 
 //socket and port setup
-socket(server)
+socketIO(server);
 // let io = socket(server);
 // let data = 0;
 // io.on('connection', function(socket) {

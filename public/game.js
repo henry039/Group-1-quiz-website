@@ -3,6 +3,8 @@
 //====================================================================================
 
 //make websockets connection to server
+// pin config
+// let socket = io.connect(`http://localhost:3000/game/${pin}`)
 let socket = io.connect('http://localhost:3000');
 
 //query DOM for socket.io

@@ -141,6 +141,7 @@ document.getElementById('ADD_quiz').onclick = function () {
         })
     })
     axios.post('/quiz_create', {
+        method : 'create',
         quiz : title,
         description : description,
         questions : questions

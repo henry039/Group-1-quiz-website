@@ -1,12 +1,12 @@
 <div id="quiz_detail">
     <label for="quiz_title">QUIZ</label>
-    <input type="text" name="quiz_title" id="quiz_title" value="{{data.quiz}}">
+    <input type="text" name="quiz_title" id="quiz_title" value="{{data.quiz.topic}}">
     <label for="quiz_description">Description</label>
-    <input type="text" name="quiz_description" id="quiz_description" value="{{data.description}}">
+    <input type="text" name="quiz_description" id="quiz_description" value="{{data.quiz.description}}">
 </div>
 
 <div id="listofquestion">
-    {{#each this.data.questions}}
+    {{#each data.questions}}
     <div class='question_main show'>
         <div class='slider collapsed'>
             <div class="toggle">

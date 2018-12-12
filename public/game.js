@@ -3,6 +3,8 @@
 //====================================================================================
 
 //make websockets connection to server
+// pin config
+// let socket = io.connect(`http://localhost:3000/game/${pin}`)
 let socket = io.connect('http://localhost:3000');
 
 //query DOM for socket.io
@@ -36,6 +38,23 @@ socket.on('chat', function(data) {
     }
 });
 
+// document.getElementById("aButton").onclick = function reload () {
+//     $('#notes').html(question({data}))
+//     // location.reload();
+// }
+
+let quesetion = Handlebars.compile(`
+    <div>
+        <div id="question">
+            <h1>{{question}}</h1>
+        </div>
+        {{#each answer}}
+        <div id="results">
+            <h1>{{result}}</h1>
+        </div>
+        {{/each}}
+    </div>
+`)
 
 let btn = document.getElementById('nextQuestion');
 

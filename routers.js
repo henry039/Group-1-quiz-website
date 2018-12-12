@@ -76,7 +76,4 @@ module.exports = function(app) {
             pageName : 'game'
         })
     })
-    // app.post("/game", (req, res) => {
-    //     res.json(parsedDummyDataJSON);
-    // })
 }

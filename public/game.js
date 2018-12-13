@@ -6,7 +6,6 @@
 // pin config
 // let socket = io.connect(`http://localhost:3000/game/${pin}`)
 let socket = io.connect('http://localhost:3000');
-socket.emit('send new question')
 
 //query DOM for socket.io
 let submitButton = document.getElementById('submitAnswerBtn');
@@ -14,7 +13,7 @@ let qButton = document.getElementById('nextQuestion');
 let counter = document.getElementById('counter');
 
 //emit events
-// answer picker
+// answer picker background colour
 // option_pick.addEventListener('click',()=>{
 //     option_pick.style.borderColor = 'transparent',
 //     option_pick.className = 'result'
@@ -43,6 +42,7 @@ let observer = new MutationObserver(cb);
 observer.observe($('#question')[0], config);
 //counter and results
 submitButton.addEventListener('click', function() {
+    //grabs the selected answer from the DOM and saves it to final_answer
     let final_answer = document.getElementsByClassName('active')[0].innerText.slice(0, -1);
     console.log(final_answer)
     socket.emit('submit answer', {
@@ -62,34 +62,43 @@ qButton.addEventListener('click', function() {
 //listen for events (used for counter)
 // let everyoneSubmitted = false;
 
+socket.on('submit individual answer', function(data) {
+    if(data){
+        $('#results').append('<h2>Correct</h2>')
+    }else{
+        $('#results').append('<h2>Wrong</h2>')
+    }
+}
+);
 //counter and results returned data
 socket.on('submit answer', function(data) {
     if (data.PlayersAnswered < data.TotalPlayers) {
         counter.innerHTML = data.PlayersAnswered + '/' + data.TotalPlayers;
     } else {
         counter.innerHTML = data.PlayersAnswered + '/' + data.TotalPlayers + ' All players submitted';
-        if(data.CorrectOrNot){
-            $('#results').append('<h2>Correct</h2>')
-        }else{
-            $('#results').append('<h2>Wrong</h2>')
-        }
         switch2();
     }
 });
+
 //next question returned data
 socket.on('next question button', function(data) {
     if (data.PlayersAnswered < data.TotalPlayers) {
         counter.innerHTML = data.PlayersAnswered + '/' + data.TotalPlayers;
+        console.log('is anybody out there?');
     } else {
         counter.innerHTML = data.PlayersAnswered + '/' + data.TotalPlayers + ' All players ready';
-        socket.emit('send new question')
+        console.log('go to next q'+data.PlayersAnswered)
         switch3();
     }
 });
+socket.on('send new question2', data=>{
+    socket.emit('send new question', data)
+})
 
-// render next question
-socket.on('send new question', data=>{
-    $('#question').html(question(data))
+
+socket.on('send new question1', (data)=>{
+    console.log('from game ' + data);
+    $('#question').html(question(data));
 })
 // document.getElementById("aButton").onclick = function reload () {
 //     $('#notes').html(question({data}))

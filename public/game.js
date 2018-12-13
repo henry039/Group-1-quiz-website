@@ -3,8 +3,6 @@
 //====================================================================================
 
 //make websockets connection to server
-// pin config
-// let socket = io.connect(`http://localhost:3000/game/${pin}`)
 let socket = io.connect('http://localhost:3000');
 // socket.emit('send new question')
 
@@ -14,11 +12,6 @@ let qButton = document.getElementById('nextQuestion');
 let counter = document.getElementById('counter');
 
 //emit events
-// answer picker background colour
-// option_pick.addEventListener('click',()=>{
-//     option_pick.style.borderColor = 'transparent',
-//     option_pick.className = 'result'
-// });
 let config = { attributes: true, childList: true, subtree: true };
 let cb = (mutationListe, observer) => {
     for (mutation in mutationListe) {
@@ -45,7 +38,7 @@ observer.observe($('#question')[0], config);
 submitButton.addEventListener('click', function() {
     //grabs the selected answer from the DOM and saves it to final_answer
     let final_answer = document.getElementsByClassName('active')[0].innerText.slice(0, -1);
-    console.log(final_answer)
+    // console.log(final_answer)
     socket.emit('submit answer', {
         name : socket.id,
         payload : final_answer
@@ -59,10 +52,11 @@ qButton.addEventListener('click', function() {
 });
 
 
+socket.on('to result page', ()=>{
+    window.location.href = 'http://localhost:3000/results'
+})
 
-//listen for events (used for counter)
-// let everyoneSubmitted = false;
-
+// listen for events (used for counter)
 socket.on('submit individual answer', function(data) {
     if(data){
         $('#results').append('<h2>Correct</h2>')
@@ -85,10 +79,10 @@ socket.on('submit answer', function(data) {
 socket.on('next question button', function(data) {
     if (data.PlayersAnswered < data.TotalPlayers) {
         counter.innerHTML = data.PlayersAnswered + '/' + data.TotalPlayers;
-        console.log('is anybody out there?');
+        // console.log('is anybody out there?');
     } else {
         counter.innerHTML = data.PlayersAnswered + '/' + data.TotalPlayers + ' All players ready';
-        console.log('go to next q'+data.PlayersAnswered)
+        // console.log('go to next q'+data.PlayersAnswered)
         switch3();
     }
 });
@@ -98,13 +92,10 @@ socket.on('send new question2', data=>{
 
 
 socket.on('send new question1', (data)=>{
-    console.log('from game ' + data);
+    // console.log('from game ' + data);
     $('#question').html(question(data));
 })
-// document.getElementById("aButton").onclick = function reload () {
-//     $('#notes').html(question({data}))
-//     // location.reload();
-// }
+
 let question = Handlebars.compile(`
     <div>
         <div id="question">
@@ -137,7 +128,3 @@ function switch3(){
     document.getElementById("submitAnswerBtn").disabled = false;
     document.getElementById("nextQuestion").disabled = false;
 }
-
-//====================================================================================
-// Database Stuff
-//====================================================================================

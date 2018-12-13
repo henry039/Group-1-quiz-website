@@ -3,7 +3,6 @@ const hb = require('express-handlebars');
 const router = require('./routers');
 const parser = require('body-parser');
 const session = require('express-session');
-// const socket = require('socket.io');
 const socketIO = require('./socketIO');
 
 //app setup
@@ -16,9 +15,6 @@ app.use(session({
     secret: 'superSecret',
     resave: true,
     saveUninitialized: false,
-    // cookie:{
-    //     maxAge: 900000
-    // }
 }))
 
 //setup template engine
@@ -47,16 +43,3 @@ router(app);
 
 //socket and port setup
 socketIO(server);
-// let io = socket(server);
-// let data = 0;
-// io.on('connection', function(socket) {
-//     console.log('made socket connection', socket.id);
-//     socket.on('chat', function() {
-//         data++;
-//         console.log(data);
-//         io.sockets.emit('chat', data);
-//     });
-//     socket.on('nextQuestion', () => {
-//         data = 0;
-//     })
-// });

@@ -39,6 +39,24 @@ Images
     margin-right: auto;
 }
 
+@media screen and (max-width: 500px) {
+    #quiz-question-markIMG {
+        width: 230px;;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #quiztimeIMG {
+        width: 380px;;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    #quiztimeIMG {
+        width: 300px;;
+    }
+}
+
 /*==================================================================================
 Bottom Section
 ====================================================================================*/

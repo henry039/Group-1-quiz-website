@@ -1,7 +1,7 @@
 const socket = require('socket.io');
 const fs = require('fs');
 
-// module.exports = function (server) {
+module.exports = function (server) {
     // configs
     let io = socket(server);
 
@@ -25,7 +25,6 @@ const fs = require('fs');
         }
     }
     function check_answer(submitted_answer) {
-        console.log(question_set_for_checking[(counter_current_questions)][submitted_answer])
         return question_set_for_checking[(counter_current_questions)][submitted_answer]
     }
 
@@ -72,7 +71,6 @@ const fs = require('fs');
         //         'correct', 'wrong', .....
         //     ]
     }
-    // let totalPlayers = ()=>{return contender.length};
     let totalPlayers = () => {
         return contender.length
     };
@@ -82,13 +80,8 @@ const fs = require('fs');
     let initial_question = 0;
     let question_set_for_checking = redefine_options_set();
     let question_set_for_handlebar = render_questionLoop(fetchDB());
-    // let startGameSignal;
-    // let b = fetchDB()
-    // let c = check_answer('Fruit')
-    // console.log(c)
 
     // io section
-
     io.on('connection', function (socket) {
         console.log('made socket connection', socket.id);
         contender.push(socket.id)
@@ -107,7 +100,6 @@ const fs = require('fs');
             let resultOBJ = {};
             resultOBJ[submitted_answer.name] = [];
             resultOBJ[submitted_answer.name].push(check_answer(submitted_answer.payload))
-            // contender[submitted_answer.name].push(check_answer(submitted_answer.payload))
             console.log(resultOBJ)
             let dataObj = {
                 PlayersAnswered: counter_answering,
@@ -120,16 +112,12 @@ const fs = require('fs');
             io.to(submitted_answer.name).emit('submit individual answer', dataObj.CorrectOrNot);
             console.log(counter_answering, counter_current_questions, counter_nextQuestion)
 
-            // broadcast
-            // io.sockets.emit('submit answer', dataObj);
         });
         socket.on('next question button', () => {
             counter_answering = 0;
 
             console.log(counter_answering, counter_current_questions, counter_nextQuestion)
             // console.log(counter_answering);
-            // io.sockets.emit('next question button', dataObj);
-            // for(let i = 0; i < contender.length; i++) {
                 counter_nextQuestion++;
                 let dataObj = {
                     PlayersAnswered: counter_nextQuestion,
@@ -137,7 +125,6 @@ const fs = require('fs');
                 };
                 io.emit('next question button', dataObj);
                 console.log(counter_nextQuestion)
-                // }
                 if(counter_nextQuestion == totalPlayers() ) {
                     console.log('working once would be fine')
                     io.to(contender[0]).emit('send new question2', 4567);
@@ -148,8 +135,6 @@ const fs = require('fs');
         socket.on('send new question', (data) => {
             // console.log(question_set_for_handlebar[counter_current_questions])
             // console.log(data);
-            // startGameSignal = true;
-            // io.sockets.emit('send new question1', console.log(data));
             if (data == 1234) {
                 console.log('from index')
                 console.log(counter_answering, counter_current_questions, counter_nextQuestion)
@@ -163,4 +148,4 @@ const fs = require('fs');
         });
         socket.emit('send new question1', question_set_for_handlebar[counter_current_questions]);
     });
-// }
+}

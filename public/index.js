@@ -69,9 +69,6 @@ $(function(){
         let playPin = $('input[name=playPin]').val();
         let playHandle = $('input[name=playHandle]').val();
 
-        // render next question 
-        // socket.emit('send new question', 1234);
-
         axios.post('/', {
             playPin : playPin,
             playHandle : playHandle
@@ -82,13 +79,6 @@ $(function(){
 //====================================================================================
 // Socket Stuff
 //====================================================================================
-
-// socket emit to take player to initial question
-// $('button[name=playSubmit]').click(e=>{
-//     // render next question 
-//     console.log('clicking')
-//     socket.emit('send new question', 1234);
-// })
 
 let playSubmit = document.getElementById('playSubmit1');
 

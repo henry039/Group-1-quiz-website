@@ -23,10 +23,13 @@
                     <ul id="ulID">
                         <li>
                             {{#if username}}
-                            <p id="username">{{username}}</p>
+                            <p id="username">Hi {{username}}</p>
                             {{/if}}
                             <a href='/profile_page'><i class="fas fa-user"></i></a>&nbsp;
                             <a href=""><i class="fas fa-question"></i></a>
+                            {{#if username}}
+                            <p id="logout">logout</p>
+                            {{/if}}
                         </li>
                     </ul>
                 </div>
@@ -42,6 +45,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+    <script src="main.js"></script>
     <script src="{{ pageName }}.js"></script>
 </body>
 </html>

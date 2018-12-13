@@ -144,6 +144,8 @@ module.exports = function (server) {
         });
 
 
+
+
         socket.on('send new question', (data) => {
             // console.log(question_set_for_handlebar[counter_current_questions])
             // console.log(data);
@@ -160,6 +162,7 @@ module.exports = function (server) {
                 console.log(counter_answering, counter_current_questions, counter_nextQuestion)
             }
         });
+
         socket.emit('send new question1', question_set_for_handlebar[counter_current_questions]);
     });
 }

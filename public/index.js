@@ -94,6 +94,6 @@ let playSubmit = document.getElementById('playSubmit1');
 
 playSubmit.addEventListener('click', function(e) {
     e.preventDefault();
-    socket.emit('send new question', 1234);
+    socket.emit('send new question from index', 1234);
     window.location.href = 'http://localhost:3000/game';
 });

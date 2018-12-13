@@ -16,9 +16,6 @@ app.use(session({
     secret: 'superSecret',
     resave: true,
     saveUninitialized: false,
-    // cookie:{
-    //     maxAge: 900000
-    // }
 }))
 
 //setup template engine

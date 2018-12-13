@@ -24,8 +24,9 @@ function shuffleOptions(answerArray) {
         return answerArray;
     }
 }
-function check_answer(sumbitted_answer) {
-    return question_set_for_checking[(counter_current_questions - 1)][sumbitted_answer]
+function check_answer(submitted_answer) {
+    console.log(question_set_for_checking[(counter_current_questions - 1)][submitted_answer])
+    return question_set_for_checking[(counter_current_questions - 1)][submitted_answer]
 }
 
 function redefine_options_set(){
@@ -94,20 +95,20 @@ io.on('connection', function (socket) {
         contender.splice(release,1)
         io.emit('user disconnected');
     });
-    socket.on('submit answer', function (sumbitted_answer) {
+    socket.on('submit answer', function (submitted_answer) {
         counter_nextQuestion = 0;
         counter_answering++;
-        // console.log(sumbitted_answer)
+        console.log(submitted_answer)
         // result storing 
         let resultOBJ = {};
-        resultOBJ[sumbitted_answer.name] = [];
-        resultOBJ[sumbitted_answer.name].push(check_answer(sumbitted_answer.payload))
-        // contender[sumbitted_answer.name].push(check_answer(sumbitted_answer.payload))
+        resultOBJ[submitted_answer.name] = [];
+        resultOBJ[submitted_answer.name].push(check_answer(submitted_answer.payload))
+        // contender[submitted_answer.name].push(check_answer(submitted_answer.payload))
         console.log(resultOBJ)
         let dataObj = {
             PlayersAnswered: counter_answering,
             TotalPlayers: totalPlayers,
-            CorrectOrNot : check_answer(sumbitted_answer.payload)
+            CorrectOrNot : check_answer(submitted_answer.payload)
         };
 
         // individually

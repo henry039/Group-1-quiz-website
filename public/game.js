@@ -6,7 +6,7 @@
 // pin config
 // let socket = io.connect(`http://localhost:3000/game/${pin}`)
 let socket = io.connect('http://localhost:3000');
-socket.emit('send new question')
+// socket.emit('send new question')
 
 //query DOM for socket.io
 let submitButton = document.getElementById('submitAnswerBtn');

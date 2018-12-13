@@ -11,6 +11,9 @@ a {
   color: white;
 }
 
+a:hover {
+  text-decoration: none;
+}
 
 button {
   cursor: pointer;
@@ -77,3 +80,4 @@ nav li {
   margin-right:15px;
 
 }
+

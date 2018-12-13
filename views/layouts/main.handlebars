@@ -17,12 +17,14 @@
         <nav>
             <div class="row" id="navBarRow">
                 <div id="logoID">
-                    <span class="text-center" id="logo">Make a Quiz!</span>
+                    <a href="/"><span class="text-center" id="logo">Make a Quiz!</span></a>
                 </div>
                 <div id="navBarLinks">
                     <ul id="ulID">
                         <li>
+                            {{#if username}}
                             <p id="username">{{username}}</p>
+                            {{/if}}
                             <a href='/profile_page'><i class="fas fa-user"></i></a>&nbsp;
                             <a href=""><i class="fas fa-question"></i></a>
                         </li>

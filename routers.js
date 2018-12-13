@@ -13,7 +13,8 @@ module.exports = function(app) {
     function checkAuthentication(req,res,next){
         if(!req.isAuthenticated()){
             console.log('not authenticated')
-            res.redirect('/');    
+            res.redirect('/');
+            next('route')    
         }else{
             next();
         }
@@ -63,7 +64,7 @@ module.exports = function(app) {
         let user = req.user;
         let quizList = await db.getAllQuizzesDetail(user.id);
         for(let i in quizList){
-            quizList[i].id = Number(i)+1;
+            quizList[i].index =  Number(i)+1;
             let dateTime = quizList[i].dateTime;
             quizList[i].dateTime = `${dateTime.getFullYear()}-${dateTime.getMonth()}-${dateTime.getDate()}`
         }
@@ -74,35 +75,45 @@ module.exports = function(app) {
             quizzes: quizList
         })
     })
-    app.get("/quiz_create", (req, res) => {
+    app.get("/quiz_create", checkAuthentication, (req, res) => {
         res.render('quiz_create',{
-            username: req.uesr.username,
+            username: req.user.username,
             pageName : 'quiz_create'
         })
     })
     app.post("/quiz_create", (req, res) => {
-        dbConnect(req.body,'userID')
+        dbConnect(req.body, req.user.id)
     })
-    app.get('/api/quiz_edit', (req,res)=>{
-        dbConnect({method : 'get'}).then(data =>{
+
+    app.get('/api/quiz_edit', checkAuthentication, (req,res)=>{
+        dbConnect({method : 'get'}, req.user.id).then(data =>{
             res.send(data)
         })
     })
-    app.get('/quiz_edit', (req,res)=>{
+
+
+    app.get('/quiz_edit/:index', checkAuthentication, async (req,res)=>{
+        let index = req.params.index;
+        let quizList = await db.getAllQuizzesDetail(req.user.id);
+        let quizId = quizList[index-1].id;
         res.render('quiz_edit',{
-            username: req.uesr.username,
+            username: req.user.username,
             pageName : 'quiz_edit',
-            data : dbConnect({method : 'get'})
+            data : dbConnect({
+                method : 'get',
+                quizId: quizId
+            }, req.user.id)
         })
     })
-    app.post('/quiz_edit', (req, res)=>{
+    app.post('/quiz_edit', checkAuthentication,(req, res)=>{
         // console.log(req.body)
-        dbConnect(req.body, 'userID')
+        dbConnect(req.body, req.user.id)
     })
+
     //get request for results page
     app.get("/results", (req, res) => {
         res.render('results',{
-            username: req.uesr.username,
+            username: req.user.username,
             pageName : 'results'
         })
     })
@@ -112,7 +123,7 @@ module.exports = function(app) {
     
     app.get("/game", (req, res) => {
         res.render('game', {
-            username: req.uesr.username,
+            username: req.user.username,
             pageName : 'game'
         })
     })

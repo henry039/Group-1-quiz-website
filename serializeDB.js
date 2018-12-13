@@ -30,8 +30,7 @@ module.exports = function (input_data, userID = 1) {
         //         quiz : quiz,
         //         questions : questions
         //     }
-        let quizID = 2;
-        let userID = 1;
+        let quizID = input_data.quizId;
         let quiz;
         let question;
         dbManager.getQuizDetail(quizID, userID).then(data =>quiz = data)

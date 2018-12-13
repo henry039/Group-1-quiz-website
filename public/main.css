@@ -78,6 +78,13 @@ nav li {
   font-size: 35px;
   color: white;
   margin-right:15px;
+}
 
+#logout{
+  margin: 0;
+  font-size: 30px;
+  color: white;
+  margin-left:15px;
+  cursor: pointer;
 }
 

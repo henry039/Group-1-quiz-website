@@ -8,6 +8,7 @@
         </div>
         <div id="quizList">
             <h3>Quiz List</h3>
+            {{#if quizzes}}
             <table>
                 <tr>
                     <td>id</td>
@@ -22,6 +23,9 @@
                 </tr>
                 {{/each}}
             </table>
+            {{else}}
+            <p>You havn't made any quizzes yet.</p>
+            {{/if}}
         </div>
     </div>
 

@@ -111,20 +111,25 @@ module.exports = function(app) {
     })
 
     //get request for results page
-    app.get("/results", (req, res) => {
+    app.get("/results", checkAuthentication, (req, res) => {
         res.render('results',{
             username: req.user.username,
             pageName : 'results'
         })
     })
-    app.get('/ready', (req,res)=>{
+    app.get('/ready', checkAuthentication, (req,res)=>{
         res.render('ready_page')
     })
     
-    app.get("/game", (req, res) => {
+    app.get("/game", checkAuthentication, (req, res) => {
         res.render('game', {
             // username: req.user.username,
             pageName : 'game'
         })
+    })
+
+    app.get('/logout', checkAuthentication,(req,res)=>{
+        req.logout();
+        res.redirect('/')
     })
 }

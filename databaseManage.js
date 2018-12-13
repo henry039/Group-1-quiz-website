@@ -87,8 +87,8 @@ class Database{
         })
     }
 
-    async getQuestions(userId,quizId){
-        return await knex('questions').where('userId', userId ).andWhere('quizId', quizId) //return an array concataining question objects
+    getQuestions(userId,quizId){
+        return knex('questions').where('userId', userId ).andWhere('quizId', quizId) //return an array concataining question objects
     }
 
     editQuestion(question,answers,index,quizId,userId){ //must work after quiz is created

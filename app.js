@@ -40,6 +40,7 @@ app.set('view engine', 'handlebars');
 
 //static files
 app.use(express.static('./public'));
+app.use('/quiz_edit', express.static('public'));
 app.use(parser.urlencoded({ extended: false }));
 app.use(parser.json())
 router(app);

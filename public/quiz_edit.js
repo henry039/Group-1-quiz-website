@@ -56,82 +56,96 @@ $("#ADD_question").click(function () {
     }, 500)
 });
 
-function ADD_listener(){
-    $.get('/api/quiz_edit', (quizDetail) => {
-        console.log(quizDetail);
-        [...document.getElementsByClassName('CHECK_correct')].forEach((ele, index) => {
-            ele.onclick = () => {
-                if (ele.className == 'CHECK_correct active') {
-                    ele.className = 'CHECK_correct'
-                    ele.innerText = "❌"
-                } else {
-                    ele.className = 'CHECK_correct active'
-                    ele.innerText = "✔️"
+let quizid = document.getElementById('quizid').value;
+let questlength = document.getElementById('questlength').value;
+
+
+function ADD_listener() {
+    // axios.get('/api/quiz_edit',{
+
+    // }).then(quizDetail=> {
+    //     console.log(quizDetail);
+    [...document.getElementsByClassName('CHECK_correct')].forEach((ele, index) => {
+        ele.onclick = () => {
+            if (ele.className == 'CHECK_correct active') {
+                ele.className = 'CHECK_correct'
+                ele.innerText = "❌"
+            } else {
+                ele.className = 'CHECK_correct active'
+                ele.innerText = "✔️"
+            }
+        }
+    });
+
+    [...document.getElementsByClassName('EDIT_question')].forEach((ele, index) => {
+        ele.onclick = () => {
+            document.getElementsByClassName('slider')[index].className = 'slider expanded';
+        }
+    });
+
+    [...document.getElementsByClassName('SAVE_question')].forEach((ele, index) => {
+        ele.onclick = () => {
+            document.getElementsByClassName('slider')[index].className = 'slider collapsed';
+
+            document.getElementsByClassName('SHOW_question_time')[index].innerText = document.getElementsByClassName('question_time')[index].value + ' s';
+            document.getElementsByClassName('SHOW_question_itself')[index].innerText = document.getElementsByClassName('question_itself')[index].value;
+            let answers = [];
+            [...document.getElementsByClassName('answer_item')].forEach((ele, index)=>{
+                let answer = ele.children[1].value
+                let correct = (ele.children[2].className == 'CHECK_correct active') ? true : false;
+                let output = {
+                    answer: answer,
+                    correct: correct
                 }
-            }
-        });
-
-        [...document.getElementsByClassName('EDIT_question')].forEach((ele, index) => {
-            ele.onclick = () => {
-                document.getElementsByClassName('slider')[index].className = 'slider expanded';
-            }
-        });
-
-        [...document.getElementsByClassName('SAVE_question')].forEach((ele, index) => {
-            ele.onclick = () => {
-                document.getElementsByClassName('slider')[index].className = 'slider collapsed';
-
-                document.getElementsByClassName('SHOW_question_time')[index].innerText = document.getElementsByClassName('question_time')[index].value + ' s';
-                document.getElementsByClassName('SHOW_question_itself')[index].innerText = document.getElementsByClassName('question_itself')[index].value;
-                if (quizDetail.questions.length <= (index + 1 )) {
-                    axios.post('/quiz_edit', {
-                        method: 'update',
-                        type: 'question',
-                        action: 'append',
-                        time: document.getElementsByClassName('question_time')[index].value,
-                        quizID: quizDetail.id,
-                        userID: 'userID'
-                    })
-                } else {
-                    axios.post('/quiz_edit', {
-                        method: 'update',
-                        type: 'question',
-                        action: 'edit',
-                        index: index,
-                        quizID: quizDetail.id,
-                        userID: 'userID'
-                    })
-                }
-            }
-        });
-
-        [...document.getElementsByClassName('DELETE_question')].forEach((ele, index) => {
-            ele.onclick = function () {
-                document.getElementsByClassName('question_main')[index].classList.remove('show')
-                setTimeout(() => {
-                    document.getElementsByClassName('question_main')[index].remove();
-                }, 500);
+                answers.push(output)
+            })
+            if (questlength <= (index + 1)) {
+            axios.post('/quiz_edit', {
+                method: 'update',
+                type: 'question',
+                action: 'append',
+                question: document.getElementsByClassName('question_itself')[index].value,
+                answers: answers,
+                time: document.getElementsByClassName('question_time')[index].value,
+                quizID: quizid
+            })
+            } else {
                 axios.post('/quiz_edit', {
-                    method: 'delete',
+                    method: 'update',
                     type: 'question',
+                    action: 'edit',
                     index: index,
-                    quizID: quizDetail.id,
-                    userID: 'userID'
+                    quizID: quizid
                 })
             }
-        });
+        }
+    });
 
-        [...document.getElementsByClassName('ADD_answer')].forEach((ele, index) => {
-            ele.onclick = () => {
-                $('.answer_field').eq(index).append(ansPlace)
-            }
-        });
+    [...document.getElementsByClassName('DELETE_question')].forEach((ele, index) => {
+        ele.onclick = function () {
+            document.getElementsByClassName('question_main')[index].classList.remove('show')
+            setTimeout(() => {
+                document.getElementsByClassName('question_main')[index].remove();
+            }, 500);
+            axios.post('/quiz_edit', {
+                method: 'delete',
+                type: 'question',
+                index: index,
+                quizID: quizid
+            })
+        }
+    });
 
-        [...document.getElementsByClassName('DELETE_answer')].forEach((ele, index) => {
-            ele.onclick = () => {
-                $(ele).parent().remove()
-            }
-        });
+    [...document.getElementsByClassName('ADD_answer')].forEach((ele, index) => {
+        ele.onclick = () => {
+            $('.answer_field').eq(index).append(ansPlace)
+        }
+    });
+
+    [...document.getElementsByClassName('DELETE_answer')].forEach((ele, index) => {
+        ele.onclick = () => {
+            $(ele).parent().remove()
+        }
     });
 }
 
@@ -155,33 +169,32 @@ observer.observe($('#listofquestion')[0], config);
 document.getElementById('ADD_quiz').onclick = function () {
     let title = document.getElementById("quiz_title").value;
     let description = document.getElementById('quiz_description').value;
-    let questions = [];
-    [...document.getElementsByClassName('question_field')].forEach((ele, index) => {
-        let question_itself = document.getElementsByClassName('question_itself')[index].value;
-        let question_time = document.getElementsByClassName('question_time')[index].value;
-        let answers = [];
-        [...ele.getElementsByClassName('answer_item')].forEach((ele, index) => {
-            let answer = ele.children[1].value
-            let correct = (ele.children[2].className == 'CHECK_correct active') ? true : false;
-            let output = {
-                answer: answer,
-                correct: correct
-            }
-            answers.push(output)
-        })
-        questions.push({
-            question: question_itself,
-            time: question_time,
-            answers: answers
-        })
-    })
+    // let questions = [];
+    // [...document.getElementsByClassName('question_field')].forEach((ele, index) => {
+    //     let question_itself = document.getElementsByClassName('question_itself')[index].value;
+    //     let question_time = document.getElementsByClassName('question_time')[index].value;
+    //     let answers = [];
+    //     [...ele.getElementsByClassName('answer_item')].forEach((ele, index) => {
+    //         let answer = ele.children[1].value
+    //         let correct = (ele.children[2].className == 'CHECK_correct active') ? true : false;
+    //         let output = {
+    //             answer: answer,
+    //             correct: correct
+    //         }
+    //         answers.push(output)
+    //     })
+    //     questions.push({
+    //         question: question_itself,
+    //         time: question_time,
+    //         answers: answers
+    //     })
+    // })
     axios.post('/quiz_edit', {
         // axios edit quiz detail
         type: 'quiz',
         method: 'update',
         quiz: title,
         description: description,
-        quizID: 'quizID',
-        userID: 'userID'
+        quizID: quizid
     })
 }

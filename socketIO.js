@@ -25,6 +25,8 @@ module.exports = function (server) {
         }
     }
     function check_answer(submitted_answer) {
+        console.log(submitted_answer)
+        console.log( question_set_for_checking, counter_current_questions)
         return question_set_for_checking[(counter_current_questions)][submitted_answer]
     }
 
@@ -41,6 +43,7 @@ module.exports = function (server) {
         }
         return output
     }
+
     function render_questionLoop(data) {
         let arr = [];
         for (let i = 0; i < data.question.length; i++) {
@@ -58,8 +61,9 @@ module.exports = function (server) {
             shuffleOptions(arr[i].Answers)
         }
         // console.log(arr);
-        return shuffleOptions(arr);
+        return arr;
     }
+
 
     // temp storage section
     let contender = [
@@ -83,36 +87,39 @@ module.exports = function (server) {
     let question_set_for_handlebar = render_questionLoop(fetchDB());
     // let startGameSignal;
     // let b = fetchDB()
-    // let c = check_answer('Fruit')
+    let c = check_answer('No')
     // console.log(c)
 
     // io section
 
-    // io.on('connection', function (socket) {
-    //     console.log('made socket connection', socket.id);
-    //     contender.push(socket.id)
-    //     console.log(contender)
-    //     socket.on('disconnect', function () {
-    //         console.log('out socket connection', socket.id);
-    //         let release = contender.indexOf(socket.id)
-    //         contender.splice(release, 1)
-    //         io.emit('user disconnected');
-    //     });
-    //     socket.on('submit answer', function (submitted_answer) {
-    //         counter_nextQuestion = 0;
-    //         counter_answering++;
-    //         // console.log(submitted_answer)
-    //         // result storing 
-    //         let resultOBJ = {};
-    //         resultOBJ[submitted_answer.name] = [];
-    //         resultOBJ[submitted_answer.name].push(check_answer(submitted_answer.payload))
-    //         // contender[submitted_answer.name].push(check_answer(submitted_answer.payload))
-    //         console.log(resultOBJ)
-    //         let dataObj = {
-    //             PlayersAnswered: counter_answering,
-    //             TotalPlayers: totalPlayers(),
-    //             CorrectOrNot: check_answer(submitted_answer.payload)
-    //         };
+    io.on('connection', function (socket) {
+        console.log('made socket connection', socket.id);
+        contender.push(socket.id)
+        console.log(contender)
+        socket.on('disconnect', function () {
+            console.log('out socket connection', socket.id);
+            let release = contender.indexOf(socket.id)
+            contender.splice(release, 1)
+            io.emit('user disconnected');
+        });
+        socket.on('submit answer', function (submitted_answer) {
+            counter_nextQuestion = 0;
+            counter_answering++;
+            // console.log(submitted_answer)
+            // result storing 
+            let resultOBJ = {};
+            resultOBJ[submitted_answer.name] = [];
+            resultOBJ[submitted_answer.name].push(check_answer(submitted_answer.payload))
+            // contender[submitted_answer.name].push(check_answer(submitted_answer.payload))
+            console.log(resultOBJ)
+            let dataObj = {
+                PlayersAnswered: counter_answering,
+                TotalPlayers: totalPlayers(),
+                CorrectOrNot: check_answer(submitted_answer.payload)
+            };
+
+
+
 
     io.on('connection', function (socket) {
         console.log('made socket connection', socket.id);

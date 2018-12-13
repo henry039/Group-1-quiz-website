@@ -1,6 +1,6 @@
 const passport = require('passport');
 const setUpPassportStrategy = require('./passportStrategy')
-const auth = require('./authentication');
+// const auth = require('./authentication');
 const dbConnect = require('./serializeDB.js')
 const Database = require('./databaseManage');
 
@@ -85,26 +85,34 @@ module.exports = function(app) {
         dbConnect(req.body, req.user.id)
     })
 
-    app.get('/api/quiz_edit', checkAuthentication, (req,res)=>{
-        dbConnect({method : 'get'}, req.user.id).then(data =>{
-            res.send(data)
-        })
-    })
-
+    // app.get('/api/quiz_edit', checkAuthentication, (req,res)=>{
+    //     dbConnect({method:'get', quizId : req.body.quizID}, req.user.id).then(data =>{
+    //         res.send(data)
+    //     })
+    // })
 
     app.get('/quiz_edit/:index', checkAuthentication, async (req,res)=>{
-        let index = req.params.index;
-        let quizList = await db.getAllQuizzesDetail(req.user.id);
-        let quizId = quizList[index-1].id;
-        res.render('quiz_edit',{
-            username: req.user.username,
-            pageName : 'quiz_edit',
-            data : dbConnect({
+        try{
+            let index = req.params.index;
+            let quizList = await db.getAllQuizzesDetail(req.user.id);
+            let quizId = parseInt(quizList[index - 1].id);
+            let data = await dbConnect({
                 method : 'get',
-                quizId: quizId
+                quizId : quizId
             }, req.user.id)
-        })
+            res.render('quiz_edit',{
+                username: req.user.username,
+                pageName : 'quiz_edit',
+                data : data,
+                length : data.questions.length,
+                usr : req.user.id,
+                quizId : quizId
+            })
+        }catch(err){
+            console.log(err)
+        }
     })
+
     app.post('/quiz_edit', checkAuthentication,(req, res)=>{
         // console.log(req.body)
         dbConnect(req.body, req.user.id)
@@ -123,7 +131,7 @@ module.exports = function(app) {
     
     app.get("/game", checkAuthentication, (req, res) => {
         res.render('game', {
-            // username: req.user.username,
+            username: req.user.username,
             pageName : 'game'
         })
     })

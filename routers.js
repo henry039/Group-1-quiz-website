@@ -121,7 +121,7 @@ module.exports = function(app) {
         res.render('ready_page')
     })
     
-    app.get("/game", checkAuthentication, (req, res) => {
+    app.get("/game", (req, res) => {
         res.render('game', {
             // username: req.user.username,
             pageName : 'game'

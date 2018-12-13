@@ -65,15 +65,15 @@ nav li {
   color: white;
 }
 
-<<<<<<< HEAD
+#ulID {
+  padding: 0;
+  margin: 0;
+}
+
 #username{
   margin: 0;
   font-size: 35px;
   color: white;
   margin-right:15px;
-=======
-#ulID {
-  padding: 0;
-  margin: 0;
->>>>>>> a00ec90aafd9f6321462ad20f523aa5bf15f00f4
+
 }

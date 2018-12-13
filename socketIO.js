@@ -15,7 +15,6 @@ function fetchDB() {
         question : parsedDummyDataJSON.questions
     }
 }
-function contender_stay_or_leave() { }
 function shuffleOptions(answerArray) {
     if(answerArray !== []){
         for (let i = answerArray.length - 1; i > 0; i--) {
@@ -87,16 +86,30 @@ let question_set_for_handlebar = render_questionLoop(fetchDB())
 
 io.on('connection', function (socket) {
     console.log('made socket connection', socket.id);
+    contender.push(socket.id)
+    console.log(contender)
+    socket.on('disconnect', function () {
+        console.log('out socket connection', socket.id);
+        let release = contender.indexOf(socket.id)
+        contender.splice(release,1)
+        io.emit('user disconnected');
+    });
     socket.on('submit answer', function (sumbitted_answer) {
         counter_nextQuestion = 0;
         counter_answering++;
         // console.log(sumbitted_answer)
+        // result storing 
+        let resultOBJ = {};
+        resultOBJ[sumbitted_answer.name] = [];
+        resultOBJ[sumbitted_answer.name].push(check_answer(sumbitted_answer.payload))
         // contender[sumbitted_answer.name].push(check_answer(sumbitted_answer.payload))
+        console.log(resultOBJ)
         let dataObj = {
             PlayersAnswered: counter_answering,
             TotalPlayers: totalPlayers,
             CorrectOrNot : check_answer(sumbitted_answer.payload)
         };
+
         // individually
         io.emit('submit answer', dataObj)
         // broadcast

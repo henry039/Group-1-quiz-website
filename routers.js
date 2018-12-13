@@ -44,7 +44,9 @@ module.exports = function(app) {
         dbConnect(req.body,'userID')
     })
     app.get('/api/quiz_edit', (req,res)=>{
-        res.send(dbConnect({method : 'get'}))
+        dbConnect({method : 'get'}).then(data =>{
+            res.send(data)
+        })
     })
     app.get('/quiz_edit', (req,res)=>{
         res.render('quiz_edit',{

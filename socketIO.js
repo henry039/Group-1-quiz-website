@@ -1,7 +1,7 @@
 const socket = require('socket.io');
 const fs = require('fs');
 
-module.exports = function (server) {
+// module.exports = function (server) {
     // configs
     let io = socket(server);
 
@@ -25,6 +25,7 @@ module.exports = function (server) {
         }
     }
     function check_answer(submitted_answer) {
+        console.log(question_set_for_checking[(counter_current_questions)][submitted_answer])
         return question_set_for_checking[(counter_current_questions)][submitted_answer]
     }
 
@@ -139,7 +140,7 @@ module.exports = function (server) {
                 // }
                 if(counter_nextQuestion == totalPlayers() ) {
                     console.log('working once would be fine')
-                    io.emit('send new question2', 4567);
+                    io.to(contender[0]).emit('send new question2', 4567);
                 }
         });
 
@@ -156,10 +157,10 @@ module.exports = function (server) {
                 console.log('from game page')
                 counter_nextQuestion = 0;
                 counter_current_questions++;
-                socket.emit('send new question1', question_set_for_handlebar[counter_current_questions]);
+                io.emit('send new question1', question_set_for_handlebar[counter_current_questions]);
                 console.log(counter_answering, counter_current_questions, counter_nextQuestion)
             }
         });
         socket.emit('send new question1', question_set_for_handlebar[counter_current_questions]);
     });
-}
+// }

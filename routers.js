@@ -123,7 +123,7 @@ module.exports = function(app) {
     
     app.get("/game", (req, res) => {
         res.render('game', {
-            username: req.user.username,
+            // username: req.user.username,
             pageName : 'game'
         })
     })

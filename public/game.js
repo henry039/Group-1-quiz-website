@@ -3,8 +3,6 @@
 //====================================================================================
 
 //make websockets connection to server
-// pin config
-// let socket = io.connect(`http://localhost:3000/game/${pin}`)
 let socket = io.connect('http://localhost:3000');
 
 //query DOM for socket.io
@@ -13,11 +11,6 @@ let qButton = document.getElementById('nextQuestion');
 let counter = document.getElementById('counter');
 
 //emit events
-// answer picker background colour
-// option_pick.addEventListener('click',()=>{
-//     option_pick.style.borderColor = 'transparent',
-//     option_pick.className = 'result'
-// });
 let config = { attributes: true, childList: true, subtree: true };
 let cb = (mutationListe, observer) => {
     for (mutation in mutationListe) {
@@ -59,9 +52,7 @@ qButton.addEventListener('click', function() {
 
 
 
-//listen for events (used for counter)
-// let everyoneSubmitted = false;
-
+// listen for events (used for counter)
 socket.on('submit individual answer', function(data) {
     if(data){
         $('#results').append('<h2>Correct</h2>')
@@ -100,10 +91,7 @@ socket.on('send new question1', (data)=>{
     console.log('from game ' + data);
     $('#question').html(question(data));
 })
-// document.getElementById("aButton").onclick = function reload () {
-//     $('#notes').html(question({data}))
-//     // location.reload();
-// }
+
 let question = Handlebars.compile(`
     <div>
         <div id="question">
@@ -136,7 +124,3 @@ function switch3(){
     document.getElementById("submitAnswerBtn").disabled = false;
     document.getElementById("nextQuestion").disabled = false;
 }
-
-//====================================================================================
-// Database Stuff
-//====================================================================================

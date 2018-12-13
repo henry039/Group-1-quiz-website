@@ -71,7 +71,6 @@ module.exports = function (server) {
         //         'correct', 'wrong', .....
         //     ]
     }
-    // let totalPlayers = ()=>{return contender.length};
     let totalPlayers = () => {
         return contender.length
     };
@@ -81,13 +80,8 @@ module.exports = function (server) {
     let initial_question = 0;
     let question_set_for_checking = redefine_options_set();
     let question_set_for_handlebar = render_questionLoop(fetchDB());
-    // let startGameSignal;
-    // let b = fetchDB()
-    // let c = check_answer('Fruit')
-    // console.log(c)
 
     // io section
-
     io.on('connection', function (socket) {
         console.log('made socket connection', socket.id);
         contender.push(socket.id)
@@ -106,7 +100,6 @@ module.exports = function (server) {
             let resultOBJ = {};
             resultOBJ[submitted_answer.name] = [];
             resultOBJ[submitted_answer.name].push(check_answer(submitted_answer.payload))
-            // contender[submitted_answer.name].push(check_answer(submitted_answer.payload))
             console.log(resultOBJ)
             let dataObj = {
                 PlayersAnswered: counter_answering,
@@ -119,16 +112,12 @@ module.exports = function (server) {
             io.to(submitted_answer.name).emit('submit individual answer', dataObj.CorrectOrNot);
             console.log(counter_answering, counter_current_questions, counter_nextQuestion)
 
-            // broadcast
-            // io.sockets.emit('submit answer', dataObj);
         });
         socket.on('next question button', () => {
             counter_answering = 0;
 
             console.log(counter_answering, counter_current_questions, counter_nextQuestion)
             // console.log(counter_answering);
-            // io.sockets.emit('next question button', dataObj);
-            // for(let i = 0; i < contender.length; i++) {
                 counter_nextQuestion++;
                 let dataObj = {
                     PlayersAnswered: counter_nextQuestion,
@@ -136,10 +125,9 @@ module.exports = function (server) {
                 };
                 io.emit('next question button', dataObj);
                 console.log(counter_nextQuestion)
-                // }
                 if(counter_nextQuestion == totalPlayers() ) {
                     console.log('working once would be fine')
-                    io.emit('send new question2', 4567);
+                    io.to(contender[0]).emit('send new question2', 4567);
                 }
         });
 
@@ -149,8 +137,6 @@ module.exports = function (server) {
         socket.on('send new question', (data) => {
             // console.log(question_set_for_handlebar[counter_current_questions])
             // console.log(data);
-            // startGameSignal = true;
-            // io.sockets.emit('send new question1', console.log(data));
             if (data == 1234) {
                 console.log('from index')
                 console.log(counter_answering, counter_current_questions, counter_nextQuestion)
@@ -158,7 +144,7 @@ module.exports = function (server) {
                 console.log('from game page')
                 counter_nextQuestion = 0;
                 counter_current_questions++;
-                socket.emit('send new question1', question_set_for_handlebar[counter_current_questions]);
+                io.emit('send new question1', question_set_for_handlebar[counter_current_questions]);
                 console.log(counter_answering, counter_current_questions, counter_nextQuestion)
             }
         });

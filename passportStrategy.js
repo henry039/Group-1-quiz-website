@@ -21,12 +21,13 @@ module.exports = (app)=>{
         async (email,password,done) => {
             try{
                 let users = await knex('users').where('email',email);
-               if(users.length === 0){ //if there is no such username
+                if(users.length === 0){ //if there is no such username
                     return done(null,false,{message: 'invalid credentials'});
                 }else{
                     let user = users[0];
                     let result = await bcrypt.checkPassword(password,user.password)
                     if(result){ //if the password is matched
+                        delete user.password
                         return done(null,user);
                     }else{
                         return done(null,false,{message: 'invalid credentials'});
@@ -56,7 +57,7 @@ module.exports = (app)=>{
                     }).returning('id')
 
 
-                    let [signUpUser] = await knex('users').where('id',userId)
+                    let [signUpUser] = await knex('users').column('id','username','email').where('id',userId)
                     return done(null,signUpUser);
 
                 }else{
@@ -74,11 +75,11 @@ module.exports = (app)=>{
     })
 
     passport.deserializeUser(async(id,done)=>{ //sign in using user's id
-        let users = await knex('users').where({id:id});
+        let users = await knex('users').column('id','username','email').where({id:id});
         if(users.length === 0){
             return done(new Error(`Wrong user id ${id}`));
         }else{
-            let user = uesrs[0];
+            let user = users[0];
             return done(null,user);
         }
     })

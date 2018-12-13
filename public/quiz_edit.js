@@ -58,7 +58,7 @@ $("#ADD_question").click(function () {
 
 function ADD_listener(){
     $.get('/api/quiz_edit', (quizDetail) => {
-        // console.log(quizDetail);
+        console.log(quizDetail);
         [...document.getElementsByClassName('CHECK_correct')].forEach((ele, index) => {
             ele.onclick = () => {
                 if (ele.className == 'CHECK_correct active') {

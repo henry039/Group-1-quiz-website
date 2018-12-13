@@ -1,3 +1,5 @@
+let socket = io.connect('http://localhost:3000');
+
 const switchButton = document.getElementById("switchButton");
 switchButton.onclick = function() {
     if(document.getElementById("login-form").style.display == "none") {
@@ -23,8 +25,11 @@ $(function(){
             email : loginEmail,
             password : loginPassword
         })
-        .then(()=>{
-            console.log('done')
+        .then(obj=>{
+            let data = obj.data;
+            if(data.redirect === true){
+                window.location = data.redirectURL;
+            }
         })
         .catch(err=>{
             console.log(err)
@@ -47,8 +52,11 @@ $(function(){
             user: JSON.stringify(user),
             password : signUpPassword
         })
-        .then(()=>{
-            console.log('done')
+        .then(obj=>{
+            let data = obj.data;
+            if(data.redirect === true){
+                window.location = data.redirectURL;
+            }
         })
         .catch(err=>{
             console.log(err)
@@ -61,9 +69,31 @@ $(function(){
         let playPin = $('input[name=playPin]').val();
         let playHandle = $('input[name=playHandle]').val();
 
+        // render next question 
+        // socket.emit('send new question', 1234);
+
         axios.post('/', {
             playPin : playPin,
             playHandle : playHandle
         })
     })
 })
+
+//====================================================================================
+// Socket Stuff
+//====================================================================================
+
+// socket emit to take player to initial question
+// $('button[name=playSubmit]').click(e=>{
+//     // render next question 
+//     console.log('clicking')
+//     socket.emit('send new question', 1234);
+// })
+
+let playSubmit = document.getElementById('playSubmit1');
+
+playSubmit.addEventListener('click', function(e) {
+    e.preventDefault();
+    socket.emit('send new question', 1234);
+    window.location.href = 'http://localhost:3000/game';
+});

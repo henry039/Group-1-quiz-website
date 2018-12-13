@@ -5,3 +5,11 @@
 #results {
     display: none;
 }
+
+#nextQuestion {
+    display: none;
+}
+
+#submitAnswerBtn {
+    display: block;
+}

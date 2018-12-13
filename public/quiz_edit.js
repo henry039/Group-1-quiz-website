@@ -88,7 +88,7 @@ function ADD_listener(){
                         method: 'update',
                         type: 'question',
                         action: 'append',
-                        index: index,
+                        time: document.getElementsByClassName('question_time')[index].value,
                         quizID: quizDetail.id,
                         userID: 'userID'
                     })

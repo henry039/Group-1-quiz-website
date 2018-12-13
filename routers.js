@@ -133,7 +133,6 @@ module.exports = function(app) {
                 pageName : 'game'
             })
         }
-        
     })
 
     app.get('/logout', checkAuthentication,(req,res)=>{

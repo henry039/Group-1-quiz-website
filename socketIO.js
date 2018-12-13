@@ -58,7 +58,7 @@ module.exports = function (server) {
             shuffleOptions(arr[i].Answers)
         }
         // console.log(arr);
-        return shuffleOptions(arr);
+        return arr;
     }
 
     // temp storage section

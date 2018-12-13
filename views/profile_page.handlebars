@@ -1,4 +1,27 @@
+<div class="container">
+        <div id="profile">
+            <p>username: {{username}}</p>
+            <p>email: {{email}}</p>
+            <a href='/quiz_create'><button>Create Quiz</button></a>
+            <!-- <button>Play quiz</button> -->
+            <a href='/'><button id="back">BACK</button></a> 
+        </div>
+        <div id="quizList">
+            <h3>Quiz List</h3>
+            <table>
+                <tr>
+                    <td>id</td>
+                    <td>topic</td>
+                    <td>created date</td>
+                </tr>
+                {{#each quizzes as |quiz index|}}
+                <tr>
+                    <td>{{quiz.index}}</td>
+                    <td class='link' id={{quiz.index}}>{{quiz.topic}}</td>
+                    <td>{{quiz.dateTime}}</td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div>
 
-<div id="detail"></div>
-<div id="list"></div>
-<a href="quiz_create.html"><button>Create Quiz</button></a>

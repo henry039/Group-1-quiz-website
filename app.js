@@ -13,7 +13,12 @@ let server = app.listen(3000, function () {
 });
 
 app.use(session({
-    secret: 'superSecret'
+    secret: 'superSecret',
+    resave: true,
+    saveUninitialized: false,
+    // cookie:{
+    //     maxAge: 900000
+    // }
 }))
 
 //setup template engine

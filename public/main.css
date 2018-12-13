@@ -38,25 +38,25 @@ nav li {
   display: flex;
   align-items: center;
   flex-flow: row;
+  justify-content: flex-end;
 }
 
 #navBarRow {
   width: 100%;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 #navBarLinks {
   display: flex;
   justify-content: flex-end;
-}
-
-#ulID {
-  padding: 0;
-  margin: 0;
+  width: 30%;
 }
 
 #logoID {
   display: flex;
   justify-content: flex-start;
+  width: 70%;
 }
 
 #logo {
@@ -65,9 +65,15 @@ nav li {
   color: white;
 }
 
+<<<<<<< HEAD
 #username{
   margin: 0;
   font-size: 35px;
   color: white;
   margin-right:15px;
+=======
+#ulID {
+  padding: 0;
+  margin: 0;
+>>>>>>> a00ec90aafd9f6321462ad20f523aa5bf15f00f4
 }

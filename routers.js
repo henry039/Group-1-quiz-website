@@ -1,15 +1,10 @@
-const data = require('./dummy_quiz.json');
 const passport = require('passport');
 const setUpPassportStrategy = require('./passportStrategy')
 const auth = require('./authentication');
 const dbConnect = require('./serializeDB.js')
-const fs = require('fs');
 const Database = require('./databaseManage');
 
 const db = new Database();
-
-let dummyDataJSON = fs.readFileSync('./dummy_quiz.json');
-let parsedDummyDataJSON = JSON.parse(dummyDataJSON);
 
 module.exports = function(app) {
 
@@ -86,10 +81,12 @@ module.exports = function(app) {
         })
     })
     app.post("/quiz_create", (req, res) => {
-        // dbConnect(req.body)
+        dbConnect(req.body,'userID')
     })
     app.get('/api/quiz_edit', (req,res)=>{
-        res.send(dbConnect({method : 'get'}))
+        dbConnect({method : 'get'}).then(data =>{
+            res.send(data)
+        })
     })
     app.get('/quiz_edit', (req,res)=>{
         res.render('quiz_edit',{
@@ -100,7 +97,7 @@ module.exports = function(app) {
     })
     app.post('/quiz_edit', (req, res)=>{
         // console.log(req.body)
-        dbConnect(req.body)
+        dbConnect(req.body, 'userID')
     })
     //get request for results page
     app.get("/results", (req, res) => {
@@ -118,8 +115,5 @@ module.exports = function(app) {
             username: req.uesr.username,
             pageName : 'game'
         })
-    })
-    app.post("/game", (req, res) => {
-        res.json(parsedDummyDataJSON);
     })
 }

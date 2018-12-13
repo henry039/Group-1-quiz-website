@@ -23,8 +23,11 @@ $(function(){
             email : loginEmail,
             password : loginPassword
         })
-        .then(()=>{
-            console.log('done')
+        .then(obj=>{
+            let data = obj.data;
+            if(data.redirect === true){
+                window.location = data.redirectURL;
+            }
         })
         .catch(err=>{
             console.log(err)
@@ -47,8 +50,11 @@ $(function(){
             user: JSON.stringify(user),
             password : signUpPassword
         })
-        .then(()=>{
-            console.log('done')
+        .then(obj=>{
+            let data = obj.data;
+            if(data.redirect === true){
+                window.location = data.redirectURL;
+            }
         })
         .catch(err=>{
             console.log(err)

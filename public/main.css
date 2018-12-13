@@ -11,6 +11,11 @@ a {
   color: white;
 }
 
+
+button {
+  cursor: pointer;
+}
+
 /*==================================================================================
 Navbar
 ====================================================================================*/
@@ -58,4 +63,11 @@ nav li {
   font-size: 35px;
   padding-left: 20px;
   color: white;
+}
+
+#username{
+  margin: 0;
+  font-size: 35px;
+  color: white;
+  margin-right:15px;
 }

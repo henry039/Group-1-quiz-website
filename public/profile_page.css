@@ -1,0 +1,26 @@
+body{
+    margin: 0;
+    border: 0;
+}
+
+.container {
+    width: 70vw;
+    margin: 0 15vw;
+    display: flex;
+    justify-content: space-between
+}
+
+div#profile, div#quizList {
+    margin-top: 6.5vh;
+}
+
+#profile .img{
+    width: 50px;
+    height: 50px;
+    border: 1px black solid;
+}
+
+td {
+    border: 2px blue solid;
+    text-align: center;
+}

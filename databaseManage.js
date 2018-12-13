@@ -11,7 +11,7 @@ const knex = require('knex')({
 
 
 
-class database{
+class Database{
     constructor(){}
     createQuizStructure(topic,userId,description){  //create quiz and append quiz link to quiz list
         return knex.transaction(async trx=>{
@@ -24,7 +24,8 @@ class database{
             let [quizid] = await trx('quizzes').insert({
                 topic: topic,
                 description: description,
-                userId: userId
+                userId: userId,
+                dateTime: trx.fn.now(3)
             }).returning('id');
             return {
                 quizId: quizid,
@@ -38,6 +39,10 @@ class database{
         .then(arr=>{
             return(arr[0]);
         })
+    }
+
+    getAllQuizzesDetail(userId){
+        return knex('quizzes').where('userId', userId).orderBy('dateTime','asc')
     }
 
     editQuizDetail(topic,description,quizId,userId){ 
@@ -102,8 +107,9 @@ class database{
         })
     }
 
-    deleteQuestion(questionId,quizId,userId){
+    deleteQuestion(index,quizId,userId){
         return knex.transaction(async trx=>{
+            let questionId = index+1;
             await trx('questions').where('quizId',quizId).andWhere('userId',userId).andWhere('id',questionId).del();
             await trx('questions').decrement('id',1).where('userId',userId).andWhere('quizId',quizId).andWhere('id','>',questionId);
         })
@@ -149,4 +155,5 @@ class database{
 
 }
 
-module.exports = database;
+
+module.exports = Database;

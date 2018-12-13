@@ -4,6 +4,9 @@ const setUpPassportStrategy = require('./passportStrategy')
 const auth = require('./authentication');
 const dbConnect = require('./serializeDB.js')
 const fs = require('fs');
+const Database = require('./databaseManage');
+
+const db = new Database();
 
 let dummyDataJSON = fs.readFileSync('./dummy_quiz.json');
 let parsedDummyDataJSON = JSON.parse(dummyDataJSON);
@@ -12,11 +15,29 @@ module.exports = function(app) {
 
     setUpPassportStrategy(app);
 
+    function checkAuthentication(req,res,next){
+        if(!req.isAuthenticated()){
+            console.log('not authenticated')
+            res.redirect('/');    
+        }else{
+            next();
+        }
+    }
+
     //get request for index page
     app.get("/", (req, res) => {
-        res.render('index',{
-            pageName : 'index'
-        })
+        let user = req.user;
+        if(user){
+            res.render('index',{
+                username: user.username,
+                pageName : 'index'
+            })
+        }else{
+            res.render('index',{
+                pageName : 'index'
+            })
+        }
+        
     })
     //post request for index page login.
     // app.post("/", (req, res)=>{
@@ -29,19 +50,38 @@ module.exports = function(app) {
     // })
 
     app.post('/login', passport.authenticate('local-login'),(req,res) => {
-        console.log(req.user);
+        res.send({
+            redirect: true,
+            redirectURL: '/profile_page'
+        });
     })
 
-    app.post ('/signup',passport.authenticate('local-signup'),(req,res) => {
-        console.log(req.user);
+    app.post('/signup',passport.authenticate('local-signup'),(req,res) => {
+        res.send({
+            redirect: true,
+            redirectURL: '/profile_page'
+        });
     })
 
     //get request for profile page
-    app.get("/profile_page", (req, res) => {
-        res.render('profile_page')
+    app.get("/profile_page", checkAuthentication, async (req, res) => {
+        let user = req.user;
+        let quizList = await db.getAllQuizzesDetail(user.id);
+        for(let i in quizList){
+            quizList[i].id = Number(i)+1;
+            let dateTime = quizList[i].dateTime;
+            quizList[i].dateTime = `${dateTime.getFullYear()}-${dateTime.getMonth()}-${dateTime.getDate()}`
+        }
+        res.render('profile_page',{
+            pageName:'profile_page',
+            username: user.username,
+            email: user.email,
+            quizzes: quizList
+        })
     })
     app.get("/quiz_create", (req, res) => {
         res.render('quiz_create',{
+            username: req.uesr.username,
             pageName : 'quiz_create'
         })
     })
@@ -53,6 +93,7 @@ module.exports = function(app) {
     })
     app.get('/quiz_edit', (req,res)=>{
         res.render('quiz_edit',{
+            username: req.uesr.username,
             pageName : 'quiz_edit',
             data : dbConnect({method : 'get'})
         })
@@ -64,6 +105,7 @@ module.exports = function(app) {
     //get request for results page
     app.get("/results", (req, res) => {
         res.render('results',{
+            username: req.uesr.username,
             pageName : 'results'
         })
     })
@@ -73,6 +115,7 @@ module.exports = function(app) {
     
     app.get("/game", (req, res) => {
         res.render('game', {
+            username: req.uesr.username,
             pageName : 'game'
         })
     })
